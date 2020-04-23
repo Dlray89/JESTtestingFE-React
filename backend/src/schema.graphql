@@ -1,6 +1,6 @@
 type Query {
     info: String!
-    feed: [Project!]!
+    feed(filter: String ): [Project!]!
 }
 
 type Mutation {

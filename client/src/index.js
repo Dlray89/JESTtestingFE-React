@@ -6,11 +6,24 @@ import * as serviceWorker from './serviceWorker';
 
 //
 import { ApolloProvider} from "react-apollo"
+import { ApolloClient} from "apollo-client"
+import { createHttpLink } from "apollo-link-http"
+import { InMemoryCache} from "apollo-cache-inmemory"
+
+//
+const httpLink = createHttpLink({
+    url: 'https://4000-a84d4123-9481-426d-933c-dc45c24fe4dd.ws-us02.gitpod.io/'
+})
+
+const client = new ApolloClient({
+    link: httpLink,
+    cache: new InMemoryCache()
+})
 
 ReactDOM.render(
-  <React.StrictMode>
+  <ApolloProvider client={client}>
     <App />
-  </React.StrictMode>,
+  </ApolloProvider>,
   document.getElementById('root')
 );
 

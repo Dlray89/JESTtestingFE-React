@@ -5,6 +5,7 @@ const { prisma } = require("../prisma/..src/genertated/prisma-client")
 
 const Query = require("./resolvers/Query")
 const Mutation = require("./resolvers/Mutation")
+const Subscription = require("./resolvers/Subscription")
 
 
 
@@ -12,7 +13,8 @@ const Mutation = require("./resolvers/Mutation")
 
 const resolvers ={
  Query,
- Mutation
+ Mutation,
+ Subscription,
 }
 
 

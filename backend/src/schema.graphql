@@ -1,0 +1,15 @@
+type Query {
+    info: String!
+    feed: [Project!]!
+}
+
+type Mutation {
+    post(projectName: String!, description: String!): Project!
+}
+
+type Project {
+    id: ID!
+    projectName: String!
+    description: String!
+}
+

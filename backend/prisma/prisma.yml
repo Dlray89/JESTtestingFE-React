@@ -1,0 +1,7 @@
+endpoint: ''
+
+datamodel: datamodel.prisma
+
+generate:
+    - generator: javascripit-client
+      output: ..src/genertated/prisma-client

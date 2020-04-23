@@ -1,6 +1,5 @@
 type Project {
     id: ID! @id
-    createdAt! @createdAt
     projectName: String!
     description: String!
 }

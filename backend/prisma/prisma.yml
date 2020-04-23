@@ -1,7 +1,8 @@
-endpoint: ''
+#endpoint: ''
+endpoint: https://us1.prisma.sh/david-979c00/backend/dev
 
 datamodel: datamodel.prisma
 
 generate:
-    - generator: javascripit-client
+    - generator: javascript-client
       output: ..src/genertated/prisma-client

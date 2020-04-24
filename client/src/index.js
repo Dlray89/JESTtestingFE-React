@@ -12,7 +12,7 @@ import { InMemoryCache} from "apollo-cache-inmemory"
 
 //
 const httpLink = createHttpLink({
-    url: 'https://4000-a84d4123-9481-426d-933c-dc45c24fe4dd.ws-us02.gitpod.io/'
+    uri: 'http://localhost:4000/'
 })
 
 const client = new ApolloClient({

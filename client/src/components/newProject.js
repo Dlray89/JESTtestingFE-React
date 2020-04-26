@@ -8,12 +8,12 @@ import { FEED_QUERY } from "./ProjectList"
 import gql from "graphql-tag"
 
 const POST_MUTATION = gql `
-mutation PostMutation($projectName: String!, $description: String!) {
-    post(projectName: $projectName, description: $description) {
-        id
-        projectName
-        description
-    }
+mutation CreateProject($newProject: ProjectCreateInput!) {
+  createProject(data: $newProject) {
+    id
+    projectName
+    description
+  }
 }
 `
 
@@ -23,11 +23,14 @@ class NewProject extends Component {
         description: ''
     }
 
+    resetFrom = () => {
+        this.setState({ projectName: "", description: ""})
+    }
     render() {
         const { projectName, description} = this.state
         return(
             <div>
-                <div>
+                <form onSubmit={e => {e.preventDefault(); this.resetFrom()}}>
                         <input 
                             value={projectName}
                             onChange={e => this.setState({ projectName: e.target.value})}
@@ -39,24 +42,27 @@ class NewProject extends Component {
                             onChange={e => this.setState({ description: e.target.value})}
                             type="text"
                             placeholder="Project details"
+                            
                         />
                         <Mutation
                          mutation={POST_MUTATION} 
-                         variables={{ projectName, description}}
+                         variables={{ newProject: {projectName, description} }}
+                         
+                        //  variables={{ projectName, description}}
                         //  onCompleted={() => this.props.push()
-                         update={(store, {data: { post } }) => {
-                             const data = store.readQuery({ query: FEED_QUERY })
-                             data.feed.projects.unShift(post)
-                             store.writeQuery({
-                                 query: FEED_QUERY,
-                                 data
-                             })
-                         }}
+                        refetchQueries={[
+                            {
+                                query: FEED_QUERY,
+                                
+                                
+                            }
+
+                        ]}
                          >
                         {postMutation => <button onClick={postMutation}>Submit</button>}
                         </Mutation>
                        
-                </div>
+                </form>
             </div>
         )
     }

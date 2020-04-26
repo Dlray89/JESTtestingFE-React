@@ -4,12 +4,12 @@ import gql from "graphql-tag"
 import Project from "./Project"
 
 export const FEED_QUERY = gql `
-{
-    feed {
-       id
-       projectName
-       description
-    }
+query AllProjects {
+  projects {
+    id
+    projectName
+    description
+  }
 }
 `
 console.log(FEED_QUERY)
@@ -25,7 +25,7 @@ export default class ProjectList extends Component {
                     if (loading) return <div>Fetching</div>
                     if (error) return <div>Error</div>
 
-                    const projectData = data.feed
+                    const projectData = data.projects
 
                     return (
                         <div>

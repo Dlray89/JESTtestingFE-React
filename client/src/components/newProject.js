@@ -8,12 +8,12 @@ import { FEED_QUERY } from "./ProjectList"
 import gql from "graphql-tag"
 
 const POST_MUTATION = gql `
-mutation PostMutation($projectName: String!, $description: String!) {
-    post(projectName: $projectName, description: $description) {
-        id
-        projectName
-        description
-    }
+mutation CreateProject($newProject: ProjectCreateInput!) {
+  createProject(data: $newProject) {
+    id
+    projectName
+    description
+  }
 }
 `
 
@@ -42,16 +42,13 @@ class NewProject extends Component {
                         />
                         <Mutation
                          mutation={POST_MUTATION} 
-                         variables={{ projectName, description}}
+                         variables={{ newProject: {projectName, description} }}
                         //  onCompleted={() => this.props.push()
-                         update={(store, {data: { post } }) => {
-                             const data = store.readQuery({ query: FEED_QUERY })
-                             data.feed.projects.unShift(post)
-                             store.writeQuery({
-                                 query: FEED_QUERY,
-                                 data
-                             })
-                         }}
+                        refetchQueries={[
+                            {
+                                query: FEED_QUERY
+                            }
+                        ]}
                          >
                         {postMutation => <button onClick={postMutation}>Submit</button>}
                         </Mutation>

@@ -5,6 +5,7 @@ type Query {
 
 type Mutation {
     post(projectName: String!, description: String!): Project!
+    remove(id: ID!): Project!
 }
 
 type Subscription {

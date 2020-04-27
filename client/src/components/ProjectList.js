@@ -3,7 +3,16 @@ import { Query} from "react-apollo"
 import Navbar from "./NavBar"
 import gql from "graphql-tag"
 import Project from "./Project"
-import { Card, Typography, withStyles } from "@material-ui/core"
+import { withStyles } from "@material-ui/core"
+
+const style = theme => ({
+    root: {
+        display: "flex",
+        flexWrap:"wrap",
+        justifyContent:"space-around",
+        margin: " 2% 0 2% 0"
+    }
+})
 
 export const FEED_QUERY = gql `
 query AllProjects {
@@ -14,25 +23,18 @@ query AllProjects {
   }
 }
 `
-const styles = theme => ({
-    root: {
-        border: "solid 2px red",
-        display: "flex",
-        justifyContent: "space-evenly"
-    }
-})
 
 
+
+
+console.log(FEED_QUERY)
 
 
 class ProjectList extends Component {
-    constructor(props){
-        super(props)
-    }
-
-    render(){
-        const { classes } = this.props
+   
+ render(){
     
+    const{ classes} = this.props
 
         return(
 
@@ -46,15 +48,15 @@ class ProjectList extends Component {
                     const projectData = data.projects
 
                     return (
-                        <div className={classes.root}>
-                            {projectData.map(project =>
-                            <div>
-                        <Project key={project.id} project={project}  />
-                        
-                         </div>
+                        <div className={classes.root} >
+                            {projectData.map(project => 
+
+                <Project key={project.id} project={project} delete={this.deleteHandler}
+                              />
+                                
                             
                             )}
-                            
+
                         </div>
                     )
 
@@ -65,5 +67,5 @@ class ProjectList extends Component {
     }
 }
 
-export default withStyles(styles, { withTheme: true})(ProjectList)
+export default withStyles(style, {withTheme: true})(ProjectList)
 

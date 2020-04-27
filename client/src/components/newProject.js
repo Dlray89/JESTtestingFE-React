@@ -6,7 +6,9 @@ import React, { Component } from "react"
 import { Mutation } from "react-apollo"
 import { FEED_QUERY } from "./ProjectList"
 import gql from "graphql-tag"
+
 import AddBoxIcon from '@material-ui/icons/AddBox';import {TextField, Button, Typography,Card} from "@material-ui/core"
+import ProjectList from "./ProjectList"
 
 const POST_MUTATION = gql `
 mutation CreateProject($newProject: ProjectCreateInput!) {
@@ -70,6 +72,7 @@ class NewProject extends Component {
                         </Mutation>
                        
                 </Card>
+                <ProjectList />
             </div>
         )
     }

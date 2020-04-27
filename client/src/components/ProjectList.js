@@ -45,9 +45,10 @@ class ProjectList extends Component {
 
                     return (
                         <div className={classes.root} >
+                        
                             {projectData.map(project => 
-
-                <Project key={project.id} project={project} delete={this.deleteHandler}
+                       
+                <Project key={project.id} project={project} 
                               />
                                 
                             

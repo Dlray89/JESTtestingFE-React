@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter} from "react-router-dom"
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -11,6 +12,7 @@ import { createHttpLink } from "apollo-link-http"
 import { InMemoryCache} from "apollo-cache-inmemory"
 
 //
+
 const httpLink = createHttpLink({
     uri: 'https://us1.prisma.sh/david-979c00/backend/dev'
 })
@@ -22,7 +24,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
+  <BrowserRouter>
     <App />
+    </BrowserRouter>
   </ApolloProvider>,
   document.getElementById('root')
 );

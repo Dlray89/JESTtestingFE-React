@@ -1,5 +1,7 @@
+
+
 type Project {
-    id: ID! @id
+    id: ID! @id @unique
     projectName: String!
     description: String!
 }

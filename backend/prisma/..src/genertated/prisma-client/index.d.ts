@@ -16,6 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  checkList: (where?: CheckListWhereInput) => Promise<boolean>;
   project: (where?: ProjectWhereInput) => Promise<boolean>;
 }
 
@@ -38,6 +39,25 @@ export interface Prisma {
    * Queries
    */
 
+  checkList: (where: CheckListWhereUniqueInput) => CheckListNullablePromise;
+  checkLists: (args?: {
+    where?: CheckListWhereInput;
+    orderBy?: CheckListOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<CheckList>;
+  checkListsConnection: (args?: {
+    where?: CheckListWhereInput;
+    orderBy?: CheckListOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => CheckListConnectionPromise;
   project: (where: ProjectWhereUniqueInput) => ProjectNullablePromise;
   projects: (args?: {
     where?: ProjectWhereInput;
@@ -63,6 +83,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createCheckList: (data: CheckListCreateInput) => CheckListPromise;
+  updateCheckList: (args: {
+    data: CheckListUpdateInput;
+    where: CheckListWhereUniqueInput;
+  }) => CheckListPromise;
+  updateManyCheckLists: (args: {
+    data: CheckListUpdateManyMutationInput;
+    where?: CheckListWhereInput;
+  }) => BatchPayloadPromise;
+  upsertCheckList: (args: {
+    where: CheckListWhereUniqueInput;
+    create: CheckListCreateInput;
+    update: CheckListUpdateInput;
+  }) => CheckListPromise;
+  deleteCheckList: (where: CheckListWhereUniqueInput) => CheckListPromise;
+  deleteManyCheckLists: (where?: CheckListWhereInput) => BatchPayloadPromise;
   createProject: (data: ProjectCreateInput) => ProjectPromise;
   updateProject: (args: {
     data: ProjectUpdateInput;
@@ -88,6 +124,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  checkList: (
+    where?: CheckListSubscriptionWhereInput
+  ) => CheckListSubscriptionPayloadSubscription;
   project: (
     where?: ProjectSubscriptionWhereInput
   ) => ProjectSubscriptionPayloadSubscription;
@@ -101,15 +140,65 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type CheckListOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "itemName_ASC"
+  | "itemName_DESC"
+  | "completed_ASC"
+  | "completed_DESC";
+
 export type ProjectOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "projectName_ASC"
   | "projectName_DESC"
   | "description_ASC"
-  | "description_DESC";
+  | "description_DESC"
+  | "createAt_ASC"
+  | "createAt_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export type CheckListWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CheckListWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  itemName?: Maybe<String>;
+  itemName_not?: Maybe<String>;
+  itemName_in?: Maybe<String[] | String>;
+  itemName_not_in?: Maybe<String[] | String>;
+  itemName_lt?: Maybe<String>;
+  itemName_lte?: Maybe<String>;
+  itemName_gt?: Maybe<String>;
+  itemName_gte?: Maybe<String>;
+  itemName_contains?: Maybe<String>;
+  itemName_not_contains?: Maybe<String>;
+  itemName_starts_with?: Maybe<String>;
+  itemName_not_starts_with?: Maybe<String>;
+  itemName_ends_with?: Maybe<String>;
+  itemName_not_ends_with?: Maybe<String>;
+  completed?: Maybe<Boolean>;
+  completed_not?: Maybe<Boolean>;
+  AND?: Maybe<CheckListWhereInput[] | CheckListWhereInput>;
+  OR?: Maybe<CheckListWhereInput[] | CheckListWhereInput>;
+  NOT?: Maybe<CheckListWhereInput[] | CheckListWhereInput>;
+}
 
 export type ProjectWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -158,25 +247,69 @@ export interface ProjectWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
+  createAt?: Maybe<DateTimeInput>;
+  createAt_not?: Maybe<DateTimeInput>;
+  createAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createAt_lt?: Maybe<DateTimeInput>;
+  createAt_lte?: Maybe<DateTimeInput>;
+  createAt_gt?: Maybe<DateTimeInput>;
+  createAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
   OR?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
   NOT?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
+}
+
+export interface CheckListCreateInput {
+  id?: Maybe<ID_Input>;
+  itemName: String;
+  completed: Boolean;
+}
+
+export interface CheckListUpdateInput {
+  itemName?: Maybe<String>;
+  completed?: Maybe<Boolean>;
+}
+
+export interface CheckListUpdateManyMutationInput {
+  itemName?: Maybe<String>;
+  completed?: Maybe<Boolean>;
 }
 
 export interface ProjectCreateInput {
   id?: Maybe<ID_Input>;
   projectName: String;
   description: String;
+  createAt: DateTimeInput;
 }
 
 export interface ProjectUpdateInput {
   projectName?: Maybe<String>;
   description?: Maybe<String>;
+  createAt?: Maybe<DateTimeInput>;
 }
 
 export interface ProjectUpdateManyMutationInput {
   projectName?: Maybe<String>;
   description?: Maybe<String>;
+  createAt?: Maybe<DateTimeInput>;
+}
+
+export interface CheckListSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CheckListWhereInput>;
+  AND?: Maybe<
+    CheckListSubscriptionWhereInput[] | CheckListSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    CheckListSubscriptionWhereInput[] | CheckListSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    CheckListSubscriptionWhereInput[] | CheckListSubscriptionWhereInput
+  >;
 }
 
 export interface ProjectSubscriptionWhereInput {
@@ -194,53 +327,53 @@ export interface NodeNode {
   id: ID_Output;
 }
 
-export interface Project {
+export interface CheckList {
   id: ID_Output;
-  projectName: String;
-  description: String;
+  itemName: String;
+  completed: Boolean;
 }
 
-export interface ProjectPromise extends Promise<Project>, Fragmentable {
+export interface CheckListPromise extends Promise<CheckList>, Fragmentable {
   id: () => Promise<ID_Output>;
-  projectName: () => Promise<String>;
-  description: () => Promise<String>;
+  itemName: () => Promise<String>;
+  completed: () => Promise<Boolean>;
 }
 
-export interface ProjectSubscription
-  extends Promise<AsyncIterator<Project>>,
+export interface CheckListSubscription
+  extends Promise<AsyncIterator<CheckList>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  projectName: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
+  itemName: () => Promise<AsyncIterator<String>>;
+  completed: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface ProjectNullablePromise
-  extends Promise<Project | null>,
+export interface CheckListNullablePromise
+  extends Promise<CheckList | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  projectName: () => Promise<String>;
-  description: () => Promise<String>;
+  itemName: () => Promise<String>;
+  completed: () => Promise<Boolean>;
 }
 
-export interface ProjectConnection {
+export interface CheckListConnection {
   pageInfo: PageInfo;
-  edges: ProjectEdge[];
+  edges: CheckListEdge[];
 }
 
-export interface ProjectConnectionPromise
-  extends Promise<ProjectConnection>,
+export interface CheckListConnectionPromise
+  extends Promise<CheckListConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ProjectEdge>>() => T;
-  aggregate: <T = AggregateProjectPromise>() => T;
+  edges: <T = FragmentableArray<CheckListEdge>>() => T;
+  aggregate: <T = AggregateCheckListPromise>() => T;
 }
 
-export interface ProjectConnectionSubscription
-  extends Promise<AsyncIterator<ProjectConnection>>,
+export interface CheckListConnectionSubscription
+  extends Promise<AsyncIterator<CheckListConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ProjectEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateProjectSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CheckListEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCheckListSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -264,6 +397,94 @@ export interface PageInfoSubscription
   hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
   startCursor: () => Promise<AsyncIterator<String>>;
   endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CheckListEdge {
+  node: CheckList;
+  cursor: String;
+}
+
+export interface CheckListEdgePromise
+  extends Promise<CheckListEdge>,
+    Fragmentable {
+  node: <T = CheckListPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CheckListEdgeSubscription
+  extends Promise<AsyncIterator<CheckListEdge>>,
+    Fragmentable {
+  node: <T = CheckListSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateCheckList {
+  count: Int;
+}
+
+export interface AggregateCheckListPromise
+  extends Promise<AggregateCheckList>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCheckListSubscription
+  extends Promise<AsyncIterator<AggregateCheckList>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Project {
+  id: ID_Output;
+  projectName: String;
+  description: String;
+  createAt: DateTimeOutput;
+}
+
+export interface ProjectPromise extends Promise<Project>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  projectName: () => Promise<String>;
+  description: () => Promise<String>;
+  createAt: () => Promise<DateTimeOutput>;
+}
+
+export interface ProjectSubscription
+  extends Promise<AsyncIterator<Project>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  projectName: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  createAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface ProjectNullablePromise
+  extends Promise<Project | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  projectName: () => Promise<String>;
+  description: () => Promise<String>;
+  createAt: () => Promise<DateTimeOutput>;
+}
+
+export interface ProjectConnection {
+  pageInfo: PageInfo;
+  edges: ProjectEdge[];
+}
+
+export interface ProjectConnectionPromise
+  extends Promise<ProjectConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProjectEdge>>() => T;
+  aggregate: <T = AggregateProjectPromise>() => T;
+}
+
+export interface ProjectConnectionSubscription
+  extends Promise<AsyncIterator<ProjectConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ProjectEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateProjectSubscription>() => T;
 }
 
 export interface ProjectEdge {
@@ -315,6 +536,53 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
+export interface CheckListSubscriptionPayload {
+  mutation: MutationType;
+  node: CheckList;
+  updatedFields: String[];
+  previousValues: CheckListPreviousValues;
+}
+
+export interface CheckListSubscriptionPayloadPromise
+  extends Promise<CheckListSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CheckListPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CheckListPreviousValuesPromise>() => T;
+}
+
+export interface CheckListSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CheckListSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CheckListSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CheckListPreviousValuesSubscription>() => T;
+}
+
+export interface CheckListPreviousValues {
+  id: ID_Output;
+  itemName: String;
+  completed: Boolean;
+}
+
+export interface CheckListPreviousValuesPromise
+  extends Promise<CheckListPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  itemName: () => Promise<String>;
+  completed: () => Promise<Boolean>;
+}
+
+export interface CheckListPreviousValuesSubscription
+  extends Promise<AsyncIterator<CheckListPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  itemName: () => Promise<AsyncIterator<String>>;
+  completed: () => Promise<AsyncIterator<Boolean>>;
+}
+
 export interface ProjectSubscriptionPayload {
   mutation: MutationType;
   node: Project;
@@ -344,6 +612,7 @@ export interface ProjectPreviousValues {
   id: ID_Output;
   projectName: String;
   description: String;
+  createAt: DateTimeOutput;
 }
 
 export interface ProjectPreviousValuesPromise
@@ -352,6 +621,7 @@ export interface ProjectPreviousValuesPromise
   id: () => Promise<ID_Output>;
   projectName: () => Promise<String>;
   description: () => Promise<String>;
+  createAt: () => Promise<DateTimeOutput>;
 }
 
 export interface ProjectPreviousValuesSubscription
@@ -360,6 +630,7 @@ export interface ProjectPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   projectName: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
+  createAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 /*
@@ -374,14 +645,24 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+DateTime scalar input type, allowing Date
 */
-export type Boolean = boolean;
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 export type Long = string;
 
@@ -392,6 +673,10 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "Project",
+    embedded: false
+  },
+  {
+    name: "CheckList",
     embedded: false
   }
 ];

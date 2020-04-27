@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateProject {
+/* GraphQL */ `type AggregateCheckList {
+  count: Int!
+}
+
+type AggregateProject {
   count: Int!
 }
 
@@ -11,9 +15,123 @@ type BatchPayload {
   count: Long!
 }
 
+type CheckList {
+  id: ID!
+  itemName: String!
+  completed: Boolean!
+}
+
+type CheckListConnection {
+  pageInfo: PageInfo!
+  edges: [CheckListEdge]!
+  aggregate: AggregateCheckList!
+}
+
+input CheckListCreateInput {
+  id: ID
+  itemName: String!
+  completed: Boolean!
+}
+
+type CheckListEdge {
+  node: CheckList!
+  cursor: String!
+}
+
+enum CheckListOrderByInput {
+  id_ASC
+  id_DESC
+  itemName_ASC
+  itemName_DESC
+  completed_ASC
+  completed_DESC
+}
+
+type CheckListPreviousValues {
+  id: ID!
+  itemName: String!
+  completed: Boolean!
+}
+
+type CheckListSubscriptionPayload {
+  mutation: MutationType!
+  node: CheckList
+  updatedFields: [String!]
+  previousValues: CheckListPreviousValues
+}
+
+input CheckListSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CheckListWhereInput
+  AND: [CheckListSubscriptionWhereInput!]
+  OR: [CheckListSubscriptionWhereInput!]
+  NOT: [CheckListSubscriptionWhereInput!]
+}
+
+input CheckListUpdateInput {
+  itemName: String
+  completed: Boolean
+}
+
+input CheckListUpdateManyMutationInput {
+  itemName: String
+  completed: Boolean
+}
+
+input CheckListWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  itemName: String
+  itemName_not: String
+  itemName_in: [String!]
+  itemName_not_in: [String!]
+  itemName_lt: String
+  itemName_lte: String
+  itemName_gt: String
+  itemName_gte: String
+  itemName_contains: String
+  itemName_not_contains: String
+  itemName_starts_with: String
+  itemName_not_starts_with: String
+  itemName_ends_with: String
+  itemName_not_ends_with: String
+  completed: Boolean
+  completed_not: Boolean
+  AND: [CheckListWhereInput!]
+  OR: [CheckListWhereInput!]
+  NOT: [CheckListWhereInput!]
+}
+
+input CheckListWhereUniqueInput {
+  id: ID
+}
+
+scalar DateTime
+
 scalar Long
 
 type Mutation {
+  createCheckList(data: CheckListCreateInput!): CheckList!
+  updateCheckList(data: CheckListUpdateInput!, where: CheckListWhereUniqueInput!): CheckList
+  updateManyCheckLists(data: CheckListUpdateManyMutationInput!, where: CheckListWhereInput): BatchPayload!
+  upsertCheckList(where: CheckListWhereUniqueInput!, create: CheckListCreateInput!, update: CheckListUpdateInput!): CheckList!
+  deleteCheckList(where: CheckListWhereUniqueInput!): CheckList
+  deleteManyCheckLists(where: CheckListWhereInput): BatchPayload!
   createProject(data: ProjectCreateInput!): Project!
   updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
@@ -43,6 +161,7 @@ type Project {
   id: ID!
   projectName: String!
   description: String!
+  createAt: DateTime!
 }
 
 type ProjectConnection {
@@ -55,6 +174,7 @@ input ProjectCreateInput {
   id: ID
   projectName: String!
   description: String!
+  createAt: DateTime!
 }
 
 type ProjectEdge {
@@ -69,12 +189,15 @@ enum ProjectOrderByInput {
   projectName_DESC
   description_ASC
   description_DESC
+  createAt_ASC
+  createAt_DESC
 }
 
 type ProjectPreviousValues {
   id: ID!
   projectName: String!
   description: String!
+  createAt: DateTime!
 }
 
 type ProjectSubscriptionPayload {
@@ -98,11 +221,13 @@ input ProjectSubscriptionWhereInput {
 input ProjectUpdateInput {
   projectName: String
   description: String
+  createAt: DateTime
 }
 
 input ProjectUpdateManyMutationInput {
   projectName: String
   description: String
+  createAt: DateTime
 }
 
 input ProjectWhereInput {
@@ -148,6 +273,14 @@ input ProjectWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  createAt: DateTime
+  createAt_not: DateTime
+  createAt_in: [DateTime!]
+  createAt_not_in: [DateTime!]
+  createAt_lt: DateTime
+  createAt_lte: DateTime
+  createAt_gt: DateTime
+  createAt_gte: DateTime
   AND: [ProjectWhereInput!]
   OR: [ProjectWhereInput!]
   NOT: [ProjectWhereInput!]
@@ -158,6 +291,9 @@ input ProjectWhereUniqueInput {
 }
 
 type Query {
+  checkList(where: CheckListWhereUniqueInput!): CheckList
+  checkLists(where: CheckListWhereInput, orderBy: CheckListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CheckList]!
+  checkListsConnection(where: CheckListWhereInput, orderBy: CheckListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CheckListConnection!
   project(where: ProjectWhereUniqueInput!): Project
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
@@ -165,6 +301,7 @@ type Query {
 }
 
 type Subscription {
+  checkList(where: CheckListSubscriptionWhereInput): CheckListSubscriptionPayload
   project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
 }
 `

@@ -14,7 +14,7 @@ export default class App extends Component{
                 <Navbar />
                 <>
                 <Switch>
-                    <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path="/" component={Dashboard} />
                     <Route exact path="/createproject" component={NewProject} />
                     <Route exact path="/projectlist" component={ProjectList} />
                 </Switch>

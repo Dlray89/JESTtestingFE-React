@@ -11,6 +11,10 @@ type AggregateJournalEntries {
   count: Int!
 }
 
+type AggregateLabel {
+  count: Int!
+}
+
 type AggregateProject {
   count: Int!
 }
@@ -261,6 +265,103 @@ input JournalEntriesWhereUniqueInput {
   id: ID
 }
 
+type Label {
+  id: ID!
+  labelName: String!
+}
+
+type LabelConnection {
+  pageInfo: PageInfo!
+  edges: [LabelEdge]!
+  aggregate: AggregateLabel!
+}
+
+input LabelCreateInput {
+  id: ID
+  labelName: String!
+}
+
+type LabelEdge {
+  node: Label!
+  cursor: String!
+}
+
+enum LabelOrderByInput {
+  id_ASC
+  id_DESC
+  labelName_ASC
+  labelName_DESC
+}
+
+type LabelPreviousValues {
+  id: ID!
+  labelName: String!
+}
+
+type LabelSubscriptionPayload {
+  mutation: MutationType!
+  node: Label
+  updatedFields: [String!]
+  previousValues: LabelPreviousValues
+}
+
+input LabelSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: LabelWhereInput
+  AND: [LabelSubscriptionWhereInput!]
+  OR: [LabelSubscriptionWhereInput!]
+  NOT: [LabelSubscriptionWhereInput!]
+}
+
+input LabelUpdateInput {
+  labelName: String
+}
+
+input LabelUpdateManyMutationInput {
+  labelName: String
+}
+
+input LabelWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  labelName: String
+  labelName_not: String
+  labelName_in: [String!]
+  labelName_not_in: [String!]
+  labelName_lt: String
+  labelName_lte: String
+  labelName_gt: String
+  labelName_gte: String
+  labelName_contains: String
+  labelName_not_contains: String
+  labelName_starts_with: String
+  labelName_not_starts_with: String
+  labelName_ends_with: String
+  labelName_not_ends_with: String
+  AND: [LabelWhereInput!]
+  OR: [LabelWhereInput!]
+  NOT: [LabelWhereInput!]
+}
+
+input LabelWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
@@ -276,6 +377,12 @@ type Mutation {
   upsertJournalEntries(where: JournalEntriesWhereUniqueInput!, create: JournalEntriesCreateInput!, update: JournalEntriesUpdateInput!): JournalEntries!
   deleteJournalEntries(where: JournalEntriesWhereUniqueInput!): JournalEntries
   deleteManyJournalEntrieses(where: JournalEntriesWhereInput): BatchPayload!
+  createLabel(data: LabelCreateInput!): Label!
+  updateLabel(data: LabelUpdateInput!, where: LabelWhereUniqueInput!): Label
+  updateManyLabels(data: LabelUpdateManyMutationInput!, where: LabelWhereInput): BatchPayload!
+  upsertLabel(where: LabelWhereUniqueInput!, create: LabelCreateInput!, update: LabelUpdateInput!): Label!
+  deleteLabel(where: LabelWhereUniqueInput!): Label
+  deleteManyLabels(where: LabelWhereInput): BatchPayload!
   createProject(data: ProjectCreateInput!): Project!
   updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
@@ -432,6 +539,9 @@ type Query {
   journalEntries(where: JournalEntriesWhereUniqueInput!): JournalEntries
   journalEntrieses(where: JournalEntriesWhereInput, orderBy: JournalEntriesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [JournalEntries]!
   journalEntriesesConnection(where: JournalEntriesWhereInput, orderBy: JournalEntriesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JournalEntriesConnection!
+  label(where: LabelWhereUniqueInput!): Label
+  labels(where: LabelWhereInput, orderBy: LabelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Label]!
+  labelsConnection(where: LabelWhereInput, orderBy: LabelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LabelConnection!
   project(where: ProjectWhereUniqueInput!): Project
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
@@ -444,6 +554,7 @@ type Query {
 type Subscription {
   checkList(where: CheckListSubscriptionWhereInput): CheckListSubscriptionPayload
   journalEntries(where: JournalEntriesSubscriptionWhereInput): JournalEntriesSubscriptionPayload
+  label(where: LabelSubscriptionWhereInput): LabelSubscriptionPayload
   project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
   task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
 }

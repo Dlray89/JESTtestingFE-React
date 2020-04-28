@@ -26,3 +26,8 @@ type JournalEntries {
     entryName: String!
     entryDetails: String!
 }
+
+type Label {
+    id: ID! @id
+    labelName: String!
+}

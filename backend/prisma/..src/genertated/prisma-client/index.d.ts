@@ -18,6 +18,7 @@ export type Maybe<T> = T | undefined | null;
 export interface Exists {
   checkList: (where?: CheckListWhereInput) => Promise<boolean>;
   journalEntries: (where?: JournalEntriesWhereInput) => Promise<boolean>;
+  label: (where?: LabelWhereInput) => Promise<boolean>;
   project: (where?: ProjectWhereInput) => Promise<boolean>;
   task: (where?: TaskWhereInput) => Promise<boolean>;
 }
@@ -81,6 +82,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => JournalEntriesConnectionPromise;
+  label: (where: LabelWhereUniqueInput) => LabelNullablePromise;
+  labels: (args?: {
+    where?: LabelWhereInput;
+    orderBy?: LabelOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Label>;
+  labelsConnection: (args?: {
+    where?: LabelWhereInput;
+    orderBy?: LabelOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => LabelConnectionPromise;
   project: (where: ProjectWhereUniqueInput) => ProjectNullablePromise;
   projects: (args?: {
     where?: ProjectWhereInput;
@@ -163,6 +183,22 @@ export interface Prisma {
   deleteManyJournalEntrieses: (
     where?: JournalEntriesWhereInput
   ) => BatchPayloadPromise;
+  createLabel: (data: LabelCreateInput) => LabelPromise;
+  updateLabel: (args: {
+    data: LabelUpdateInput;
+    where: LabelWhereUniqueInput;
+  }) => LabelPromise;
+  updateManyLabels: (args: {
+    data: LabelUpdateManyMutationInput;
+    where?: LabelWhereInput;
+  }) => BatchPayloadPromise;
+  upsertLabel: (args: {
+    where: LabelWhereUniqueInput;
+    create: LabelCreateInput;
+    update: LabelUpdateInput;
+  }) => LabelPromise;
+  deleteLabel: (where: LabelWhereUniqueInput) => LabelPromise;
+  deleteManyLabels: (where?: LabelWhereInput) => BatchPayloadPromise;
   createProject: (data: ProjectCreateInput) => ProjectPromise;
   updateProject: (args: {
     data: ProjectUpdateInput;
@@ -210,6 +246,9 @@ export interface Subscription {
   journalEntries: (
     where?: JournalEntriesSubscriptionWhereInput
   ) => JournalEntriesSubscriptionPayloadSubscription;
+  label: (
+    where?: LabelSubscriptionWhereInput
+  ) => LabelSubscriptionPayloadSubscription;
   project: (
     where?: ProjectSubscriptionWhereInput
   ) => ProjectSubscriptionPayloadSubscription;
@@ -243,6 +282,12 @@ export type JournalEntriesOrderByInput =
   | "entryName_DESC"
   | "entryDetails_ASC"
   | "entryDetails_DESC";
+
+export type LabelOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "labelName_ASC"
+  | "labelName_DESC";
 
 export type ProjectOrderByInput =
   | "id_ASC"
@@ -362,6 +407,44 @@ export interface JournalEntriesWhereInput {
   AND?: Maybe<JournalEntriesWhereInput[] | JournalEntriesWhereInput>;
   OR?: Maybe<JournalEntriesWhereInput[] | JournalEntriesWhereInput>;
   NOT?: Maybe<JournalEntriesWhereInput[] | JournalEntriesWhereInput>;
+}
+
+export type LabelWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface LabelWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  labelName?: Maybe<String>;
+  labelName_not?: Maybe<String>;
+  labelName_in?: Maybe<String[] | String>;
+  labelName_not_in?: Maybe<String[] | String>;
+  labelName_lt?: Maybe<String>;
+  labelName_lte?: Maybe<String>;
+  labelName_gt?: Maybe<String>;
+  labelName_gte?: Maybe<String>;
+  labelName_contains?: Maybe<String>;
+  labelName_not_contains?: Maybe<String>;
+  labelName_starts_with?: Maybe<String>;
+  labelName_not_starts_with?: Maybe<String>;
+  labelName_ends_with?: Maybe<String>;
+  labelName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<LabelWhereInput[] | LabelWhereInput>;
+  OR?: Maybe<LabelWhereInput[] | LabelWhereInput>;
+  NOT?: Maybe<LabelWhereInput[] | LabelWhereInput>;
 }
 
 export type ProjectWhereUniqueInput = AtLeastOne<{
@@ -502,6 +585,19 @@ export interface JournalEntriesUpdateManyMutationInput {
   entryDetails?: Maybe<String>;
 }
 
+export interface LabelCreateInput {
+  id?: Maybe<ID_Input>;
+  labelName: String;
+}
+
+export interface LabelUpdateInput {
+  labelName?: Maybe<String>;
+}
+
+export interface LabelUpdateManyMutationInput {
+  labelName?: Maybe<String>;
+}
+
 export interface ProjectCreateInput {
   id?: Maybe<ID_Input>;
   projectName: String;
@@ -572,6 +668,17 @@ export interface JournalEntriesSubscriptionWhereInput {
     | JournalEntriesSubscriptionWhereInput[]
     | JournalEntriesSubscriptionWhereInput
   >;
+}
+
+export interface LabelSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<LabelWhereInput>;
+  AND?: Maybe<LabelSubscriptionWhereInput[] | LabelSubscriptionWhereInput>;
+  OR?: Maybe<LabelSubscriptionWhereInput[] | LabelSubscriptionWhereInput>;
+  NOT?: Maybe<LabelSubscriptionWhereInput[] | LabelSubscriptionWhereInput>;
 }
 
 export interface ProjectSubscriptionWhereInput {
@@ -793,6 +900,84 @@ export interface AggregateJournalEntriesPromise
 
 export interface AggregateJournalEntriesSubscription
   extends Promise<AsyncIterator<AggregateJournalEntries>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Label {
+  id: ID_Output;
+  labelName: String;
+}
+
+export interface LabelPromise extends Promise<Label>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  labelName: () => Promise<String>;
+}
+
+export interface LabelSubscription
+  extends Promise<AsyncIterator<Label>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  labelName: () => Promise<AsyncIterator<String>>;
+}
+
+export interface LabelNullablePromise
+  extends Promise<Label | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  labelName: () => Promise<String>;
+}
+
+export interface LabelConnection {
+  pageInfo: PageInfo;
+  edges: LabelEdge[];
+}
+
+export interface LabelConnectionPromise
+  extends Promise<LabelConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<LabelEdge>>() => T;
+  aggregate: <T = AggregateLabelPromise>() => T;
+}
+
+export interface LabelConnectionSubscription
+  extends Promise<AsyncIterator<LabelConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LabelEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLabelSubscription>() => T;
+}
+
+export interface LabelEdge {
+  node: Label;
+  cursor: String;
+}
+
+export interface LabelEdgePromise extends Promise<LabelEdge>, Fragmentable {
+  node: <T = LabelPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface LabelEdgeSubscription
+  extends Promise<AsyncIterator<LabelEdge>>,
+    Fragmentable {
+  node: <T = LabelSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateLabel {
+  count: Int;
+}
+
+export interface AggregateLabelPromise
+  extends Promise<AggregateLabel>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateLabelSubscription
+  extends Promise<AsyncIterator<AggregateLabel>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -1078,6 +1263,50 @@ export interface JournalEntriesPreviousValuesSubscription
   entryDetails: () => Promise<AsyncIterator<String>>;
 }
 
+export interface LabelSubscriptionPayload {
+  mutation: MutationType;
+  node: Label;
+  updatedFields: String[];
+  previousValues: LabelPreviousValues;
+}
+
+export interface LabelSubscriptionPayloadPromise
+  extends Promise<LabelSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = LabelPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = LabelPreviousValuesPromise>() => T;
+}
+
+export interface LabelSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<LabelSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = LabelSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = LabelPreviousValuesSubscription>() => T;
+}
+
+export interface LabelPreviousValues {
+  id: ID_Output;
+  labelName: String;
+}
+
+export interface LabelPreviousValuesPromise
+  extends Promise<LabelPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  labelName: () => Promise<String>;
+}
+
+export interface LabelPreviousValuesSubscription
+  extends Promise<AsyncIterator<LabelPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  labelName: () => Promise<AsyncIterator<String>>;
+}
+
 export interface ProjectSubscriptionPayload {
   mutation: MutationType;
   node: Project;
@@ -1227,6 +1456,10 @@ export const models: Model[] = [
   },
   {
     name: "JournalEntries",
+    embedded: false
+  },
+  {
+    name: "Label",
     embedded: false
   }
 ];

@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { Query} from "react-apollo"
 import gql from "graphql-tag"
 import RecentProject from "./Recent_Project"
+import Clock from "../tools/clock"
 import { Typography, Card, Button } from "@material-ui/core"
 
 
@@ -39,6 +40,7 @@ return(
     </div>
 <div style={{textAlign:"center", margin:"2% 0 0 0", borderTop:"solid 1px #000f89"}}>
     <Typography variant="h4">THE HUB</Typography>
+    <p><Clock /></p>
     <div style={{width:"85%", border:"solid 1px #000f89", display:"flex", justifyContent:"space-evenly", flexWrap:"wrap", padding:"5%", background:"#aeaeb1", margin:"2% auto"}}>
     
         <Card style={{width:"20%", border:"solid 1px #000f89", textAlign:"center"}}>

@@ -38,15 +38,17 @@ class Project extends Component {
                     {this.props.project.id}<br />
                 </div>
 
-                ___________________________________<br />
+                
                 <div>
                     Project Name: <br />
                     {this.props.project.projectName} <br />
                 </div>
+                _____________________________<br />
                 <div>
                     Project description: <br />
                     {this.props.project.description}
                     <br />
+                    <br/>
                 </div>
 
 

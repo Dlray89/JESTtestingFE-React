@@ -34,7 +34,7 @@ class NewProject extends Component {
         const { projectName, description} = this.state
         return(
             <div>
-                <Card style={{textAlign:"center", background:"#A3C1AD", color: "white", width:"70%", margin:"2% auto"}} onSubmit={e => {e.preventDefault(); this.resetForm() }}>
+                <Card style={{textAlign:"center", background:"#aeaeb1", color: "white", width:"70%", margin:"2% auto"}} onSubmit={e => {e.preventDefault(); this.resetForm() }}>
                 <Typography style={{ color:"white", background:"#000f89", padding: "3%"}} variant="h5">
                     New Project
                 </Typography>

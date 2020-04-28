@@ -11,6 +11,14 @@ var models = [
   {
     name: "CheckList",
     embedded: false
+  },
+  {
+    name: "Task",
+    embedded: false
+  },
+  {
+    name: "JournalEntries",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({

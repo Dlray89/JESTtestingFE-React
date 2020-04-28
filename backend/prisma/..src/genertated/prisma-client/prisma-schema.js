@@ -7,7 +7,15 @@ module.exports = {
   count: Int!
 }
 
+type AggregateJournalEntries {
+  count: Int!
+}
+
 type AggregateProject {
+  count: Int!
+}
+
+type AggregateTask {
   count: Int!
 }
 
@@ -123,6 +131,136 @@ input CheckListWhereUniqueInput {
 
 scalar DateTime
 
+type JournalEntries {
+  id: ID!
+  createdAt: DateTime
+  entryName: String!
+  entryDetails: String!
+}
+
+type JournalEntriesConnection {
+  pageInfo: PageInfo!
+  edges: [JournalEntriesEdge]!
+  aggregate: AggregateJournalEntries!
+}
+
+input JournalEntriesCreateInput {
+  id: ID
+  entryName: String!
+  entryDetails: String!
+}
+
+type JournalEntriesEdge {
+  node: JournalEntries!
+  cursor: String!
+}
+
+enum JournalEntriesOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  entryName_ASC
+  entryName_DESC
+  entryDetails_ASC
+  entryDetails_DESC
+}
+
+type JournalEntriesPreviousValues {
+  id: ID!
+  createdAt: DateTime
+  entryName: String!
+  entryDetails: String!
+}
+
+type JournalEntriesSubscriptionPayload {
+  mutation: MutationType!
+  node: JournalEntries
+  updatedFields: [String!]
+  previousValues: JournalEntriesPreviousValues
+}
+
+input JournalEntriesSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: JournalEntriesWhereInput
+  AND: [JournalEntriesSubscriptionWhereInput!]
+  OR: [JournalEntriesSubscriptionWhereInput!]
+  NOT: [JournalEntriesSubscriptionWhereInput!]
+}
+
+input JournalEntriesUpdateInput {
+  entryName: String
+  entryDetails: String
+}
+
+input JournalEntriesUpdateManyMutationInput {
+  entryName: String
+  entryDetails: String
+}
+
+input JournalEntriesWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  entryName: String
+  entryName_not: String
+  entryName_in: [String!]
+  entryName_not_in: [String!]
+  entryName_lt: String
+  entryName_lte: String
+  entryName_gt: String
+  entryName_gte: String
+  entryName_contains: String
+  entryName_not_contains: String
+  entryName_starts_with: String
+  entryName_not_starts_with: String
+  entryName_ends_with: String
+  entryName_not_ends_with: String
+  entryDetails: String
+  entryDetails_not: String
+  entryDetails_in: [String!]
+  entryDetails_not_in: [String!]
+  entryDetails_lt: String
+  entryDetails_lte: String
+  entryDetails_gt: String
+  entryDetails_gte: String
+  entryDetails_contains: String
+  entryDetails_not_contains: String
+  entryDetails_starts_with: String
+  entryDetails_not_starts_with: String
+  entryDetails_ends_with: String
+  entryDetails_not_ends_with: String
+  AND: [JournalEntriesWhereInput!]
+  OR: [JournalEntriesWhereInput!]
+  NOT: [JournalEntriesWhereInput!]
+}
+
+input JournalEntriesWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
@@ -132,12 +270,24 @@ type Mutation {
   upsertCheckList(where: CheckListWhereUniqueInput!, create: CheckListCreateInput!, update: CheckListUpdateInput!): CheckList!
   deleteCheckList(where: CheckListWhereUniqueInput!): CheckList
   deleteManyCheckLists(where: CheckListWhereInput): BatchPayload!
+  createJournalEntries(data: JournalEntriesCreateInput!): JournalEntries!
+  updateJournalEntries(data: JournalEntriesUpdateInput!, where: JournalEntriesWhereUniqueInput!): JournalEntries
+  updateManyJournalEntrieses(data: JournalEntriesUpdateManyMutationInput!, where: JournalEntriesWhereInput): BatchPayload!
+  upsertJournalEntries(where: JournalEntriesWhereUniqueInput!, create: JournalEntriesCreateInput!, update: JournalEntriesUpdateInput!): JournalEntries!
+  deleteJournalEntries(where: JournalEntriesWhereUniqueInput!): JournalEntries
+  deleteManyJournalEntrieses(where: JournalEntriesWhereInput): BatchPayload!
   createProject(data: ProjectCreateInput!): Project!
   updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
   upsertProject(where: ProjectWhereUniqueInput!, create: ProjectCreateInput!, update: ProjectUpdateInput!): Project!
   deleteProject(where: ProjectWhereUniqueInput!): Project
   deleteManyProjects(where: ProjectWhereInput): BatchPayload!
+  createTask(data: TaskCreateInput!): Task!
+  updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
+  updateManyTasks(data: TaskUpdateManyMutationInput!, where: TaskWhereInput): BatchPayload!
+  upsertTask(where: TaskWhereUniqueInput!, create: TaskCreateInput!, update: TaskUpdateInput!): Task!
+  deleteTask(where: TaskWhereUniqueInput!): Task
+  deleteManyTasks(where: TaskWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -161,7 +311,6 @@ type Project {
   id: ID!
   projectName: String!
   description: String!
-  createAt: DateTime!
 }
 
 type ProjectConnection {
@@ -174,7 +323,6 @@ input ProjectCreateInput {
   id: ID
   projectName: String!
   description: String!
-  createAt: DateTime!
 }
 
 type ProjectEdge {
@@ -189,15 +337,12 @@ enum ProjectOrderByInput {
   projectName_DESC
   description_ASC
   description_DESC
-  createAt_ASC
-  createAt_DESC
 }
 
 type ProjectPreviousValues {
   id: ID!
   projectName: String!
   description: String!
-  createAt: DateTime!
 }
 
 type ProjectSubscriptionPayload {
@@ -221,13 +366,11 @@ input ProjectSubscriptionWhereInput {
 input ProjectUpdateInput {
   projectName: String
   description: String
-  createAt: DateTime
 }
 
 input ProjectUpdateManyMutationInput {
   projectName: String
   description: String
-  createAt: DateTime
 }
 
 input ProjectWhereInput {
@@ -273,14 +416,6 @@ input ProjectWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
-  createAt: DateTime
-  createAt_not: DateTime
-  createAt_in: [DateTime!]
-  createAt_not_in: [DateTime!]
-  createAt_lt: DateTime
-  createAt_lte: DateTime
-  createAt_gt: DateTime
-  createAt_gte: DateTime
   AND: [ProjectWhereInput!]
   OR: [ProjectWhereInput!]
   NOT: [ProjectWhereInput!]
@@ -294,15 +429,150 @@ type Query {
   checkList(where: CheckListWhereUniqueInput!): CheckList
   checkLists(where: CheckListWhereInput, orderBy: CheckListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CheckList]!
   checkListsConnection(where: CheckListWhereInput, orderBy: CheckListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CheckListConnection!
+  journalEntries(where: JournalEntriesWhereUniqueInput!): JournalEntries
+  journalEntrieses(where: JournalEntriesWhereInput, orderBy: JournalEntriesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [JournalEntries]!
+  journalEntriesesConnection(where: JournalEntriesWhereInput, orderBy: JournalEntriesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JournalEntriesConnection!
   project(where: ProjectWhereUniqueInput!): Project
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
+  task(where: TaskWhereUniqueInput!): Task
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
+  tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
   node(id: ID!): Node
 }
 
 type Subscription {
   checkList(where: CheckListSubscriptionWhereInput): CheckListSubscriptionPayload
+  journalEntries(where: JournalEntriesSubscriptionWhereInput): JournalEntriesSubscriptionPayload
   project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
+  task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
+}
+
+type Task {
+  id: ID!
+  taskName: String!
+  taskDetails: String!
+  completed: Boolean!
+}
+
+type TaskConnection {
+  pageInfo: PageInfo!
+  edges: [TaskEdge]!
+  aggregate: AggregateTask!
+}
+
+input TaskCreateInput {
+  id: ID
+  taskName: String!
+  taskDetails: String!
+  completed: Boolean!
+}
+
+type TaskEdge {
+  node: Task!
+  cursor: String!
+}
+
+enum TaskOrderByInput {
+  id_ASC
+  id_DESC
+  taskName_ASC
+  taskName_DESC
+  taskDetails_ASC
+  taskDetails_DESC
+  completed_ASC
+  completed_DESC
+}
+
+type TaskPreviousValues {
+  id: ID!
+  taskName: String!
+  taskDetails: String!
+  completed: Boolean!
+}
+
+type TaskSubscriptionPayload {
+  mutation: MutationType!
+  node: Task
+  updatedFields: [String!]
+  previousValues: TaskPreviousValues
+}
+
+input TaskSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TaskWhereInput
+  AND: [TaskSubscriptionWhereInput!]
+  OR: [TaskSubscriptionWhereInput!]
+  NOT: [TaskSubscriptionWhereInput!]
+}
+
+input TaskUpdateInput {
+  taskName: String
+  taskDetails: String
+  completed: Boolean
+}
+
+input TaskUpdateManyMutationInput {
+  taskName: String
+  taskDetails: String
+  completed: Boolean
+}
+
+input TaskWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  taskName: String
+  taskName_not: String
+  taskName_in: [String!]
+  taskName_not_in: [String!]
+  taskName_lt: String
+  taskName_lte: String
+  taskName_gt: String
+  taskName_gte: String
+  taskName_contains: String
+  taskName_not_contains: String
+  taskName_starts_with: String
+  taskName_not_starts_with: String
+  taskName_ends_with: String
+  taskName_not_ends_with: String
+  taskDetails: String
+  taskDetails_not: String
+  taskDetails_in: [String!]
+  taskDetails_not_in: [String!]
+  taskDetails_lt: String
+  taskDetails_lte: String
+  taskDetails_gt: String
+  taskDetails_gte: String
+  taskDetails_contains: String
+  taskDetails_not_contains: String
+  taskDetails_starts_with: String
+  taskDetails_not_starts_with: String
+  taskDetails_ends_with: String
+  taskDetails_not_ends_with: String
+  completed: Boolean
+  completed_not: Boolean
+  AND: [TaskWhereInput!]
+  OR: [TaskWhereInput!]
+  NOT: [TaskWhereInput!]
+}
+
+input TaskWhereUniqueInput {
+  id: ID
 }
 `
       }

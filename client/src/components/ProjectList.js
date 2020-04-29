@@ -19,7 +19,13 @@ query AllProjects {
     id
     projectName
     description
+    tasks {
+      id
+      taskName
+      taskDetails
+    }
   }
+  
 }
 `
 
@@ -42,13 +48,13 @@ class ProjectList extends Component {
                     if (error) return <div>Error</div>
 
                     const projectData = data.projects
+                    console.log(projectData)
 
                     return (
                         <div className={classes.root} style={{ width:"55%"}} >
-                        
                             {projectData.map(project => 
                        
-                <Project key={project.id} project={project} 
+                <Project key={project.id} project={project} projectTask={project.tasks}
                               />
                                 
                             

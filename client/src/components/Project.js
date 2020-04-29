@@ -18,7 +18,12 @@ class Project extends Component {
         projects: {
             id: '',
             projectName: "",
-            description: ""
+            description: "",
+            tasks: [{
+                id: "",
+                taskName: "",
+                taskDetails:""
+            }]
         }
     }
 
@@ -47,6 +52,10 @@ class Project extends Component {
                 <div>
                     Project description: <br />
                     {this.props.project.description}
+                    <div key={this.props.project.tasks.id}>
+                    {this.props.project.tasks}
+                    </div>
+                    
                     <br />
                     <br/>
                 </div>

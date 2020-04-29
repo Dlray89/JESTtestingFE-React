@@ -11,11 +11,17 @@ import AddBoxIcon from '@material-ui/icons/AddBox';import {TextField, Button, Ty
 import ProjectList from "./ProjectList"
 
 const POST_MUTATION = gql `
-mutation CreateProject($newProject: ProjectCreateInput!) {
-  createProject(data: $newProject) {
+mutation CreateProject($newProject: ProjectCreateInput!){
+  createProject(data: $newProject){
     id
     projectName
     description
+    tasks {
+      id
+      taskName
+      taskDetails
+      completed
+    }
   }
 }
 `
@@ -23,7 +29,11 @@ mutation CreateProject($newProject: ProjectCreateInput!) {
 class NewProject extends Component {
     state = {
         projectName: "",
-        description: ''
+        description: '',
+        tasks: {
+            taskName: "",
+            taskDetails:""
+        }
     }
 
     resetForm = e => {

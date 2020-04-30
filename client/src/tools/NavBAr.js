@@ -92,6 +92,8 @@ export default function SearchAppBar() {
           <Button><Link style={{textDecroation:"none", color:"white"}} to="/projectlist">ProjectList </Link></Button>
 
            <Button><Link style={{textDecroation:"none", color:"white"}} to="/checklist">Checklist</Link></Button>
+
+           <Button><Link style={{textDecroation:"none", color:"white"}} to="/search">Search</Link></Button>
           
           <div className={classes.search}>
             <div className={classes.searchIcon}>

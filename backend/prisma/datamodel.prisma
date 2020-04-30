@@ -4,4 +4,30 @@ type Project {
     id: ID! @id @unique
     projectName: String!
     description: String!
+    
+}
+
+type CheckList {
+    id: ID! @id @unique
+    itemName: String!
+    completed: Boolean!
+}
+
+type Task {
+    id: ID! @id
+    taskName: String!
+    taskDetails: String!
+    completed: Boolean!
+}
+
+type JournalEntries {
+    id: ID! @id
+    createdAt: DateTime @createdAt
+    entryName: String!
+    entryDetails: String!
+}
+
+type Label {
+    id: ID! @id
+    labelName: String!
 }

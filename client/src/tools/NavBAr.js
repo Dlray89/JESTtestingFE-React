@@ -86,10 +86,14 @@ export default function SearchAppBar() {
           <Typography className={classes.title} variant="h6" noWrap>
             ProTask
           </Typography>
-          <Button><Link style={{textDecroation:"none", color:"white"}} to="/dashboard">Home</Link>
+          <Button><Link style={{textDecroation:"none", color:"white"}} to="/">Home</Link>
 </Button>
           <Button><Link style={{textDecroation:"none", color:"white"}} to="/createproject">New Project</Link></Button>
           <Button><Link style={{textDecroation:"none", color:"white"}} to="/projectlist">ProjectList </Link></Button>
+
+           <Button><Link style={{textDecroation:"none", color:"white"}} to="/checklist">Checklist</Link></Button>
+
+           <Button><Link style={{textDecroation:"none", color:"white"}} to="/search">Search</Link></Button>
           
           <div className={classes.search}>
             <div className={classes.searchIcon}>

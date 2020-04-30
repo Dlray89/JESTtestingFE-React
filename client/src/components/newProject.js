@@ -33,13 +33,14 @@ class NewProject extends Component {
     render() {
         const { projectName, description} = this.state
         return(
-            <div>
-                <Card style={{textAlign:"center", background:"#A3C1AD", color: "white", width:"70%", margin:"2% auto"}} onSubmit={e => {e.preventDefault(); this.resetForm() }}>
-                <Typography style={{ color:"white", background:"#000f89", padding: "3%"}} variant="h5">
+            <div style={{display:"flex", justifyContent:"space-between"}}>
+                <Card style={{textAlign:"center", background:"#aeaeb1", color: "white", width:"40%", margin:"2% auto", height:"70vh"}} onSubmit={e => {e.preventDefault(); this.resetForm() }}>
+
+                <Typography style={{ color:"white", background:"#000f89", padding: "2%"}} variant="h5">
                     New Project
                 </Typography>
                         <TextField 
-                        style={{margin:" 2% auto", width:"25%", textAlign:"center", color:"#000f89"}}
+                        style={{margin:" 2% auto", width:"60%", textAlign:"center", color:"#000f89"}}
                             value={projectName}
                             variant="outlined"
                             onChange={e => this.setState({ projectName: e.target.value})}

@@ -16,7 +16,11 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  checkList: (where?: CheckListWhereInput) => Promise<boolean>;
+  journalEntries: (where?: JournalEntriesWhereInput) => Promise<boolean>;
+  label: (where?: LabelWhereInput) => Promise<boolean>;
   project: (where?: ProjectWhereInput) => Promise<boolean>;
+  task: (where?: TaskWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -38,6 +42,65 @@ export interface Prisma {
    * Queries
    */
 
+  checkList: (where: CheckListWhereUniqueInput) => CheckListNullablePromise;
+  checkLists: (args?: {
+    where?: CheckListWhereInput;
+    orderBy?: CheckListOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<CheckList>;
+  checkListsConnection: (args?: {
+    where?: CheckListWhereInput;
+    orderBy?: CheckListOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => CheckListConnectionPromise;
+  journalEntries: (
+    where: JournalEntriesWhereUniqueInput
+  ) => JournalEntriesNullablePromise;
+  journalEntrieses: (args?: {
+    where?: JournalEntriesWhereInput;
+    orderBy?: JournalEntriesOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<JournalEntries>;
+  journalEntriesesConnection: (args?: {
+    where?: JournalEntriesWhereInput;
+    orderBy?: JournalEntriesOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => JournalEntriesConnectionPromise;
+  label: (where: LabelWhereUniqueInput) => LabelNullablePromise;
+  labels: (args?: {
+    where?: LabelWhereInput;
+    orderBy?: LabelOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Label>;
+  labelsConnection: (args?: {
+    where?: LabelWhereInput;
+    orderBy?: LabelOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => LabelConnectionPromise;
   project: (where: ProjectWhereUniqueInput) => ProjectNullablePromise;
   projects: (args?: {
     where?: ProjectWhereInput;
@@ -57,12 +120,85 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => ProjectConnectionPromise;
+  task: (where: TaskWhereUniqueInput) => TaskNullablePromise;
+  tasks: (args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Task>;
+  tasksConnection: (args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TaskConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
    * Mutations
    */
 
+  createCheckList: (data: CheckListCreateInput) => CheckListPromise;
+  updateCheckList: (args: {
+    data: CheckListUpdateInput;
+    where: CheckListWhereUniqueInput;
+  }) => CheckListPromise;
+  updateManyCheckLists: (args: {
+    data: CheckListUpdateManyMutationInput;
+    where?: CheckListWhereInput;
+  }) => BatchPayloadPromise;
+  upsertCheckList: (args: {
+    where: CheckListWhereUniqueInput;
+    create: CheckListCreateInput;
+    update: CheckListUpdateInput;
+  }) => CheckListPromise;
+  deleteCheckList: (where: CheckListWhereUniqueInput) => CheckListPromise;
+  deleteManyCheckLists: (where?: CheckListWhereInput) => BatchPayloadPromise;
+  createJournalEntries: (
+    data: JournalEntriesCreateInput
+  ) => JournalEntriesPromise;
+  updateJournalEntries: (args: {
+    data: JournalEntriesUpdateInput;
+    where: JournalEntriesWhereUniqueInput;
+  }) => JournalEntriesPromise;
+  updateManyJournalEntrieses: (args: {
+    data: JournalEntriesUpdateManyMutationInput;
+    where?: JournalEntriesWhereInput;
+  }) => BatchPayloadPromise;
+  upsertJournalEntries: (args: {
+    where: JournalEntriesWhereUniqueInput;
+    create: JournalEntriesCreateInput;
+    update: JournalEntriesUpdateInput;
+  }) => JournalEntriesPromise;
+  deleteJournalEntries: (
+    where: JournalEntriesWhereUniqueInput
+  ) => JournalEntriesPromise;
+  deleteManyJournalEntrieses: (
+    where?: JournalEntriesWhereInput
+  ) => BatchPayloadPromise;
+  createLabel: (data: LabelCreateInput) => LabelPromise;
+  updateLabel: (args: {
+    data: LabelUpdateInput;
+    where: LabelWhereUniqueInput;
+  }) => LabelPromise;
+  updateManyLabels: (args: {
+    data: LabelUpdateManyMutationInput;
+    where?: LabelWhereInput;
+  }) => BatchPayloadPromise;
+  upsertLabel: (args: {
+    where: LabelWhereUniqueInput;
+    create: LabelCreateInput;
+    update: LabelUpdateInput;
+  }) => LabelPromise;
+  deleteLabel: (where: LabelWhereUniqueInput) => LabelPromise;
+  deleteManyLabels: (where?: LabelWhereInput) => BatchPayloadPromise;
   createProject: (data: ProjectCreateInput) => ProjectPromise;
   updateProject: (args: {
     data: ProjectUpdateInput;
@@ -79,6 +215,22 @@ export interface Prisma {
   }) => ProjectPromise;
   deleteProject: (where: ProjectWhereUniqueInput) => ProjectPromise;
   deleteManyProjects: (where?: ProjectWhereInput) => BatchPayloadPromise;
+  createTask: (data: TaskCreateInput) => TaskPromise;
+  updateTask: (args: {
+    data: TaskUpdateInput;
+    where: TaskWhereUniqueInput;
+  }) => TaskPromise;
+  updateManyTasks: (args: {
+    data: TaskUpdateManyMutationInput;
+    where?: TaskWhereInput;
+  }) => BatchPayloadPromise;
+  upsertTask: (args: {
+    where: TaskWhereUniqueInput;
+    create: TaskCreateInput;
+    update: TaskUpdateInput;
+  }) => TaskPromise;
+  deleteTask: (where: TaskWhereUniqueInput) => TaskPromise;
+  deleteManyTasks: (where?: TaskWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -88,9 +240,21 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  checkList: (
+    where?: CheckListSubscriptionWhereInput
+  ) => CheckListSubscriptionPayloadSubscription;
+  journalEntries: (
+    where?: JournalEntriesSubscriptionWhereInput
+  ) => JournalEntriesSubscriptionPayloadSubscription;
+  label: (
+    where?: LabelSubscriptionWhereInput
+  ) => LabelSubscriptionPayloadSubscription;
   project: (
     where?: ProjectSubscriptionWhereInput
   ) => ProjectSubscriptionPayloadSubscription;
+  task: (
+    where?: TaskSubscriptionWhereInput
+  ) => TaskSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -101,6 +265,30 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type CheckListOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "itemName_ASC"
+  | "itemName_DESC"
+  | "completed_ASC"
+  | "completed_DESC";
+
+export type JournalEntriesOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "entryName_ASC"
+  | "entryName_DESC"
+  | "entryDetails_ASC"
+  | "entryDetails_DESC";
+
+export type LabelOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "labelName_ASC"
+  | "labelName_DESC";
+
 export type ProjectOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -109,7 +297,155 @@ export type ProjectOrderByInput =
   | "description_ASC"
   | "description_DESC";
 
+export type TaskOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "taskName_ASC"
+  | "taskName_DESC"
+  | "taskDetails_ASC"
+  | "taskDetails_DESC"
+  | "completed_ASC"
+  | "completed_DESC";
+
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export type CheckListWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CheckListWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  itemName?: Maybe<String>;
+  itemName_not?: Maybe<String>;
+  itemName_in?: Maybe<String[] | String>;
+  itemName_not_in?: Maybe<String[] | String>;
+  itemName_lt?: Maybe<String>;
+  itemName_lte?: Maybe<String>;
+  itemName_gt?: Maybe<String>;
+  itemName_gte?: Maybe<String>;
+  itemName_contains?: Maybe<String>;
+  itemName_not_contains?: Maybe<String>;
+  itemName_starts_with?: Maybe<String>;
+  itemName_not_starts_with?: Maybe<String>;
+  itemName_ends_with?: Maybe<String>;
+  itemName_not_ends_with?: Maybe<String>;
+  completed?: Maybe<Boolean>;
+  completed_not?: Maybe<Boolean>;
+  AND?: Maybe<CheckListWhereInput[] | CheckListWhereInput>;
+  OR?: Maybe<CheckListWhereInput[] | CheckListWhereInput>;
+  NOT?: Maybe<CheckListWhereInput[] | CheckListWhereInput>;
+}
+
+export type JournalEntriesWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface JournalEntriesWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  entryName?: Maybe<String>;
+  entryName_not?: Maybe<String>;
+  entryName_in?: Maybe<String[] | String>;
+  entryName_not_in?: Maybe<String[] | String>;
+  entryName_lt?: Maybe<String>;
+  entryName_lte?: Maybe<String>;
+  entryName_gt?: Maybe<String>;
+  entryName_gte?: Maybe<String>;
+  entryName_contains?: Maybe<String>;
+  entryName_not_contains?: Maybe<String>;
+  entryName_starts_with?: Maybe<String>;
+  entryName_not_starts_with?: Maybe<String>;
+  entryName_ends_with?: Maybe<String>;
+  entryName_not_ends_with?: Maybe<String>;
+  entryDetails?: Maybe<String>;
+  entryDetails_not?: Maybe<String>;
+  entryDetails_in?: Maybe<String[] | String>;
+  entryDetails_not_in?: Maybe<String[] | String>;
+  entryDetails_lt?: Maybe<String>;
+  entryDetails_lte?: Maybe<String>;
+  entryDetails_gt?: Maybe<String>;
+  entryDetails_gte?: Maybe<String>;
+  entryDetails_contains?: Maybe<String>;
+  entryDetails_not_contains?: Maybe<String>;
+  entryDetails_starts_with?: Maybe<String>;
+  entryDetails_not_starts_with?: Maybe<String>;
+  entryDetails_ends_with?: Maybe<String>;
+  entryDetails_not_ends_with?: Maybe<String>;
+  AND?: Maybe<JournalEntriesWhereInput[] | JournalEntriesWhereInput>;
+  OR?: Maybe<JournalEntriesWhereInput[] | JournalEntriesWhereInput>;
+  NOT?: Maybe<JournalEntriesWhereInput[] | JournalEntriesWhereInput>;
+}
+
+export type LabelWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface LabelWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  labelName?: Maybe<String>;
+  labelName_not?: Maybe<String>;
+  labelName_in?: Maybe<String[] | String>;
+  labelName_not_in?: Maybe<String[] | String>;
+  labelName_lt?: Maybe<String>;
+  labelName_lte?: Maybe<String>;
+  labelName_gt?: Maybe<String>;
+  labelName_gte?: Maybe<String>;
+  labelName_contains?: Maybe<String>;
+  labelName_not_contains?: Maybe<String>;
+  labelName_starts_with?: Maybe<String>;
+  labelName_not_starts_with?: Maybe<String>;
+  labelName_ends_with?: Maybe<String>;
+  labelName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<LabelWhereInput[] | LabelWhereInput>;
+  OR?: Maybe<LabelWhereInput[] | LabelWhereInput>;
+  NOT?: Maybe<LabelWhereInput[] | LabelWhereInput>;
+}
 
 export type ProjectWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -163,6 +499,105 @@ export interface ProjectWhereInput {
   NOT?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
 }
 
+export type TaskWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface TaskWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  taskName?: Maybe<String>;
+  taskName_not?: Maybe<String>;
+  taskName_in?: Maybe<String[] | String>;
+  taskName_not_in?: Maybe<String[] | String>;
+  taskName_lt?: Maybe<String>;
+  taskName_lte?: Maybe<String>;
+  taskName_gt?: Maybe<String>;
+  taskName_gte?: Maybe<String>;
+  taskName_contains?: Maybe<String>;
+  taskName_not_contains?: Maybe<String>;
+  taskName_starts_with?: Maybe<String>;
+  taskName_not_starts_with?: Maybe<String>;
+  taskName_ends_with?: Maybe<String>;
+  taskName_not_ends_with?: Maybe<String>;
+  taskDetails?: Maybe<String>;
+  taskDetails_not?: Maybe<String>;
+  taskDetails_in?: Maybe<String[] | String>;
+  taskDetails_not_in?: Maybe<String[] | String>;
+  taskDetails_lt?: Maybe<String>;
+  taskDetails_lte?: Maybe<String>;
+  taskDetails_gt?: Maybe<String>;
+  taskDetails_gte?: Maybe<String>;
+  taskDetails_contains?: Maybe<String>;
+  taskDetails_not_contains?: Maybe<String>;
+  taskDetails_starts_with?: Maybe<String>;
+  taskDetails_not_starts_with?: Maybe<String>;
+  taskDetails_ends_with?: Maybe<String>;
+  taskDetails_not_ends_with?: Maybe<String>;
+  completed?: Maybe<Boolean>;
+  completed_not?: Maybe<Boolean>;
+  AND?: Maybe<TaskWhereInput[] | TaskWhereInput>;
+  OR?: Maybe<TaskWhereInput[] | TaskWhereInput>;
+  NOT?: Maybe<TaskWhereInput[] | TaskWhereInput>;
+}
+
+export interface CheckListCreateInput {
+  id?: Maybe<ID_Input>;
+  itemName: String;
+  completed: Boolean;
+}
+
+export interface CheckListUpdateInput {
+  itemName?: Maybe<String>;
+  completed?: Maybe<Boolean>;
+}
+
+export interface CheckListUpdateManyMutationInput {
+  itemName?: Maybe<String>;
+  completed?: Maybe<Boolean>;
+}
+
+export interface JournalEntriesCreateInput {
+  id?: Maybe<ID_Input>;
+  entryName: String;
+  entryDetails: String;
+}
+
+export interface JournalEntriesUpdateInput {
+  entryName?: Maybe<String>;
+  entryDetails?: Maybe<String>;
+}
+
+export interface JournalEntriesUpdateManyMutationInput {
+  entryName?: Maybe<String>;
+  entryDetails?: Maybe<String>;
+}
+
+export interface LabelCreateInput {
+  id?: Maybe<ID_Input>;
+  labelName: String;
+}
+
+export interface LabelUpdateInput {
+  labelName?: Maybe<String>;
+}
+
+export interface LabelUpdateManyMutationInput {
+  labelName?: Maybe<String>;
+}
+
 export interface ProjectCreateInput {
   id?: Maybe<ID_Input>;
   projectName: String;
@@ -179,6 +614,73 @@ export interface ProjectUpdateManyMutationInput {
   description?: Maybe<String>;
 }
 
+export interface TaskCreateInput {
+  id?: Maybe<ID_Input>;
+  taskName: String;
+  taskDetails: String;
+  completed: Boolean;
+}
+
+export interface TaskUpdateInput {
+  taskName?: Maybe<String>;
+  taskDetails?: Maybe<String>;
+  completed?: Maybe<Boolean>;
+}
+
+export interface TaskUpdateManyMutationInput {
+  taskName?: Maybe<String>;
+  taskDetails?: Maybe<String>;
+  completed?: Maybe<Boolean>;
+}
+
+export interface CheckListSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CheckListWhereInput>;
+  AND?: Maybe<
+    CheckListSubscriptionWhereInput[] | CheckListSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    CheckListSubscriptionWhereInput[] | CheckListSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    CheckListSubscriptionWhereInput[] | CheckListSubscriptionWhereInput
+  >;
+}
+
+export interface JournalEntriesSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<JournalEntriesWhereInput>;
+  AND?: Maybe<
+    | JournalEntriesSubscriptionWhereInput[]
+    | JournalEntriesSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | JournalEntriesSubscriptionWhereInput[]
+    | JournalEntriesSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | JournalEntriesSubscriptionWhereInput[]
+    | JournalEntriesSubscriptionWhereInput
+  >;
+}
+
+export interface LabelSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<LabelWhereInput>;
+  AND?: Maybe<LabelSubscriptionWhereInput[] | LabelSubscriptionWhereInput>;
+  OR?: Maybe<LabelSubscriptionWhereInput[] | LabelSubscriptionWhereInput>;
+  NOT?: Maybe<LabelSubscriptionWhereInput[] | LabelSubscriptionWhereInput>;
+}
+
 export interface ProjectSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -190,8 +692,294 @@ export interface ProjectSubscriptionWhereInput {
   NOT?: Maybe<ProjectSubscriptionWhereInput[] | ProjectSubscriptionWhereInput>;
 }
 
+export interface TaskSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TaskWhereInput>;
+  AND?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+  OR?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+  NOT?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+}
+
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface CheckList {
+  id: ID_Output;
+  itemName: String;
+  completed: Boolean;
+}
+
+export interface CheckListPromise extends Promise<CheckList>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  itemName: () => Promise<String>;
+  completed: () => Promise<Boolean>;
+}
+
+export interface CheckListSubscription
+  extends Promise<AsyncIterator<CheckList>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  itemName: () => Promise<AsyncIterator<String>>;
+  completed: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface CheckListNullablePromise
+  extends Promise<CheckList | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  itemName: () => Promise<String>;
+  completed: () => Promise<Boolean>;
+}
+
+export interface CheckListConnection {
+  pageInfo: PageInfo;
+  edges: CheckListEdge[];
+}
+
+export interface CheckListConnectionPromise
+  extends Promise<CheckListConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CheckListEdge>>() => T;
+  aggregate: <T = AggregateCheckListPromise>() => T;
+}
+
+export interface CheckListConnectionSubscription
+  extends Promise<AsyncIterator<CheckListConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CheckListEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCheckListSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CheckListEdge {
+  node: CheckList;
+  cursor: String;
+}
+
+export interface CheckListEdgePromise
+  extends Promise<CheckListEdge>,
+    Fragmentable {
+  node: <T = CheckListPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CheckListEdgeSubscription
+  extends Promise<AsyncIterator<CheckListEdge>>,
+    Fragmentable {
+  node: <T = CheckListSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateCheckList {
+  count: Int;
+}
+
+export interface AggregateCheckListPromise
+  extends Promise<AggregateCheckList>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCheckListSubscription
+  extends Promise<AsyncIterator<AggregateCheckList>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface JournalEntries {
+  id: ID_Output;
+  createdAt?: DateTimeOutput;
+  entryName: String;
+  entryDetails: String;
+}
+
+export interface JournalEntriesPromise
+  extends Promise<JournalEntries>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  entryName: () => Promise<String>;
+  entryDetails: () => Promise<String>;
+}
+
+export interface JournalEntriesSubscription
+  extends Promise<AsyncIterator<JournalEntries>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  entryName: () => Promise<AsyncIterator<String>>;
+  entryDetails: () => Promise<AsyncIterator<String>>;
+}
+
+export interface JournalEntriesNullablePromise
+  extends Promise<JournalEntries | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  entryName: () => Promise<String>;
+  entryDetails: () => Promise<String>;
+}
+
+export interface JournalEntriesConnection {
+  pageInfo: PageInfo;
+  edges: JournalEntriesEdge[];
+}
+
+export interface JournalEntriesConnectionPromise
+  extends Promise<JournalEntriesConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<JournalEntriesEdge>>() => T;
+  aggregate: <T = AggregateJournalEntriesPromise>() => T;
+}
+
+export interface JournalEntriesConnectionSubscription
+  extends Promise<AsyncIterator<JournalEntriesConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<JournalEntriesEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateJournalEntriesSubscription>() => T;
+}
+
+export interface JournalEntriesEdge {
+  node: JournalEntries;
+  cursor: String;
+}
+
+export interface JournalEntriesEdgePromise
+  extends Promise<JournalEntriesEdge>,
+    Fragmentable {
+  node: <T = JournalEntriesPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface JournalEntriesEdgeSubscription
+  extends Promise<AsyncIterator<JournalEntriesEdge>>,
+    Fragmentable {
+  node: <T = JournalEntriesSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateJournalEntries {
+  count: Int;
+}
+
+export interface AggregateJournalEntriesPromise
+  extends Promise<AggregateJournalEntries>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateJournalEntriesSubscription
+  extends Promise<AsyncIterator<AggregateJournalEntries>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Label {
+  id: ID_Output;
+  labelName: String;
+}
+
+export interface LabelPromise extends Promise<Label>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  labelName: () => Promise<String>;
+}
+
+export interface LabelSubscription
+  extends Promise<AsyncIterator<Label>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  labelName: () => Promise<AsyncIterator<String>>;
+}
+
+export interface LabelNullablePromise
+  extends Promise<Label | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  labelName: () => Promise<String>;
+}
+
+export interface LabelConnection {
+  pageInfo: PageInfo;
+  edges: LabelEdge[];
+}
+
+export interface LabelConnectionPromise
+  extends Promise<LabelConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<LabelEdge>>() => T;
+  aggregate: <T = AggregateLabelPromise>() => T;
+}
+
+export interface LabelConnectionSubscription
+  extends Promise<AsyncIterator<LabelConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LabelEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLabelSubscription>() => T;
+}
+
+export interface LabelEdge {
+  node: Label;
+  cursor: String;
+}
+
+export interface LabelEdgePromise extends Promise<LabelEdge>, Fragmentable {
+  node: <T = LabelPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface LabelEdgeSubscription
+  extends Promise<AsyncIterator<LabelEdge>>,
+    Fragmentable {
+  node: <T = LabelSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateLabel {
+  count: Int;
+}
+
+export interface AggregateLabelPromise
+  extends Promise<AggregateLabel>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateLabelSubscription
+  extends Promise<AsyncIterator<AggregateLabel>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Project {
@@ -243,29 +1031,6 @@ export interface ProjectConnectionSubscription
   aggregate: <T = AggregateProjectSubscription>() => T;
 }
 
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
 export interface ProjectEdge {
   node: Project;
   cursor: String;
@@ -299,6 +1064,92 @@ export interface AggregateProjectSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface Task {
+  id: ID_Output;
+  taskName: String;
+  taskDetails: String;
+  completed: Boolean;
+}
+
+export interface TaskPromise extends Promise<Task>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  taskName: () => Promise<String>;
+  taskDetails: () => Promise<String>;
+  completed: () => Promise<Boolean>;
+}
+
+export interface TaskSubscription
+  extends Promise<AsyncIterator<Task>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  taskName: () => Promise<AsyncIterator<String>>;
+  taskDetails: () => Promise<AsyncIterator<String>>;
+  completed: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface TaskNullablePromise
+  extends Promise<Task | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  taskName: () => Promise<String>;
+  taskDetails: () => Promise<String>;
+  completed: () => Promise<Boolean>;
+}
+
+export interface TaskConnection {
+  pageInfo: PageInfo;
+  edges: TaskEdge[];
+}
+
+export interface TaskConnectionPromise
+  extends Promise<TaskConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TaskEdge>>() => T;
+  aggregate: <T = AggregateTaskPromise>() => T;
+}
+
+export interface TaskConnectionSubscription
+  extends Promise<AsyncIterator<TaskConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TaskEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTaskSubscription>() => T;
+}
+
+export interface TaskEdge {
+  node: Task;
+  cursor: String;
+}
+
+export interface TaskEdgePromise extends Promise<TaskEdge>, Fragmentable {
+  node: <T = TaskPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TaskEdgeSubscription
+  extends Promise<AsyncIterator<TaskEdge>>,
+    Fragmentable {
+  node: <T = TaskSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTask {
+  count: Int;
+}
+
+export interface AggregateTaskPromise
+  extends Promise<AggregateTask>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTaskSubscription
+  extends Promise<AsyncIterator<AggregateTask>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface BatchPayload {
   count: Long;
 }
@@ -313,6 +1164,147 @@ export interface BatchPayloadSubscription
   extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface CheckListSubscriptionPayload {
+  mutation: MutationType;
+  node: CheckList;
+  updatedFields: String[];
+  previousValues: CheckListPreviousValues;
+}
+
+export interface CheckListSubscriptionPayloadPromise
+  extends Promise<CheckListSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CheckListPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CheckListPreviousValuesPromise>() => T;
+}
+
+export interface CheckListSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CheckListSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CheckListSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CheckListPreviousValuesSubscription>() => T;
+}
+
+export interface CheckListPreviousValues {
+  id: ID_Output;
+  itemName: String;
+  completed: Boolean;
+}
+
+export interface CheckListPreviousValuesPromise
+  extends Promise<CheckListPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  itemName: () => Promise<String>;
+  completed: () => Promise<Boolean>;
+}
+
+export interface CheckListPreviousValuesSubscription
+  extends Promise<AsyncIterator<CheckListPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  itemName: () => Promise<AsyncIterator<String>>;
+  completed: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface JournalEntriesSubscriptionPayload {
+  mutation: MutationType;
+  node: JournalEntries;
+  updatedFields: String[];
+  previousValues: JournalEntriesPreviousValues;
+}
+
+export interface JournalEntriesSubscriptionPayloadPromise
+  extends Promise<JournalEntriesSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = JournalEntriesPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = JournalEntriesPreviousValuesPromise>() => T;
+}
+
+export interface JournalEntriesSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<JournalEntriesSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = JournalEntriesSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = JournalEntriesPreviousValuesSubscription>() => T;
+}
+
+export interface JournalEntriesPreviousValues {
+  id: ID_Output;
+  createdAt?: DateTimeOutput;
+  entryName: String;
+  entryDetails: String;
+}
+
+export interface JournalEntriesPreviousValuesPromise
+  extends Promise<JournalEntriesPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  entryName: () => Promise<String>;
+  entryDetails: () => Promise<String>;
+}
+
+export interface JournalEntriesPreviousValuesSubscription
+  extends Promise<AsyncIterator<JournalEntriesPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  entryName: () => Promise<AsyncIterator<String>>;
+  entryDetails: () => Promise<AsyncIterator<String>>;
+}
+
+export interface LabelSubscriptionPayload {
+  mutation: MutationType;
+  node: Label;
+  updatedFields: String[];
+  previousValues: LabelPreviousValues;
+}
+
+export interface LabelSubscriptionPayloadPromise
+  extends Promise<LabelSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = LabelPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = LabelPreviousValuesPromise>() => T;
+}
+
+export interface LabelSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<LabelSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = LabelSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = LabelPreviousValuesSubscription>() => T;
+}
+
+export interface LabelPreviousValues {
+  id: ID_Output;
+  labelName: String;
+}
+
+export interface LabelPreviousValuesPromise
+  extends Promise<LabelPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  labelName: () => Promise<String>;
+}
+
+export interface LabelPreviousValuesSubscription
+  extends Promise<AsyncIterator<LabelPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  labelName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ProjectSubscriptionPayload {
@@ -362,6 +1354,56 @@ export interface ProjectPreviousValuesSubscription
   description: () => Promise<AsyncIterator<String>>;
 }
 
+export interface TaskSubscriptionPayload {
+  mutation: MutationType;
+  node: Task;
+  updatedFields: String[];
+  previousValues: TaskPreviousValues;
+}
+
+export interface TaskSubscriptionPayloadPromise
+  extends Promise<TaskSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TaskPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TaskPreviousValuesPromise>() => T;
+}
+
+export interface TaskSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TaskSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TaskSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TaskPreviousValuesSubscription>() => T;
+}
+
+export interface TaskPreviousValues {
+  id: ID_Output;
+  taskName: String;
+  taskDetails: String;
+  completed: Boolean;
+}
+
+export interface TaskPreviousValuesPromise
+  extends Promise<TaskPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  taskName: () => Promise<String>;
+  taskDetails: () => Promise<String>;
+  completed: () => Promise<Boolean>;
+}
+
+export interface TaskPreviousValuesSubscription
+  extends Promise<AsyncIterator<TaskPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  taskName: () => Promise<AsyncIterator<String>>;
+  taskDetails: () => Promise<AsyncIterator<String>>;
+  completed: () => Promise<AsyncIterator<Boolean>>;
+}
+
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
@@ -374,14 +1416,24 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+DateTime scalar input type, allowing Date
 */
-export type Boolean = boolean;
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 export type Long = string;
 
@@ -392,6 +1444,22 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "Project",
+    embedded: false
+  },
+  {
+    name: "CheckList",
+    embedded: false
+  },
+  {
+    name: "Task",
+    embedded: false
+  },
+  {
+    name: "JournalEntries",
+    embedded: false
+  },
+  {
+    name: "Label",
     embedded: false
   }
 ];

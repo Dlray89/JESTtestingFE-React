@@ -1,6 +1,6 @@
 type Query {
     info: String!
-    feed(filter: String ): [Project!]!
+    projects(filter: String ): [Project!]!
 }
 
 type Mutation {
@@ -15,5 +15,5 @@ type Project {
     id: ID!
     projectName: String!
     description: String!
+    createdAt: DateTime!
 }
-

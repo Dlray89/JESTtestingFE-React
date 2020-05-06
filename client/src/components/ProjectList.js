@@ -48,10 +48,11 @@ class ProjectList extends Component {
                     const projectData = data.projects
 
                     return (
-                        <div className={classes.root} >
+                        <div className={classes.root} style={{ width:"55%"}} >
+                        
                             {projectData.map(project => 
-
-                <Project key={project.id} project={project} delete={this.deleteHandler}
+                       
+                <Project key={project.id} project={project} 
                               />
                                 
                             

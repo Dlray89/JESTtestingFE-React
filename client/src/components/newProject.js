@@ -6,7 +6,9 @@ import React, { Component } from "react"
 import { Mutation } from "react-apollo"
 import { FEED_QUERY } from "./ProjectList"
 import gql from "graphql-tag"
+
 import AddBoxIcon from '@material-ui/icons/AddBox';import {TextField, Button, Typography,Card} from "@material-ui/core"
+import ProjectList from "./ProjectList"
 
 const POST_MUTATION = gql `
 mutation CreateProject($newProject: ProjectCreateInput!) {
@@ -29,14 +31,16 @@ class NewProject extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <Card style={{textAlign:"center", background:"#A3C1AD", color: "white", width:"70%", margin:"2% auto"}} onSubmit={e => {e.preventDefault(); this.resetForm() }}>
-                <Typography style={{ color:"white", background:"#000f89", padding: "3%"}} variant="h5">
+        const { projectName, description} = this.state
+        return(
+            <div style={{display:"flex", justifyContent:"space-between"}}>
+                <Card style={{textAlign:"center", background:"#aeaeb1", color: "white", width:"40%", margin:"2% auto", height:"70vh"}} onSubmit={e => {e.preventDefault(); this.resetForm() }}>
+
+                <Typography style={{ color:"white", background:"#000f89", padding: "2%"}} variant="h5">
                     New Project
                 </Typography>
                         <TextField 
-                        style={{margin:" 2% auto", width:"25%", textAlign:"center", color:"#000f89"}}
+                        style={{margin:" 2% auto", width:"60%", textAlign:"center", color:"#000f89"}}
                             value={projectName}
                             variant="outlined"
                             onChange={e => this.setState({ projectName: e.target.value})}
@@ -70,6 +74,7 @@ class NewProject extends Component {
                         </Mutation>
                        
                 </Card>
+                <ProjectList />
             </div>
         )
     }

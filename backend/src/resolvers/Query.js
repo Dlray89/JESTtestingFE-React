@@ -1,4 +1,6 @@
-async function projects(parent, args, context) {
+const { prisma } = require('../../prisma/..src/genertated/prisma-client')
+
+async function filtering(parent, args, context) {
     const count = await context.prisma
     .projectConnection({
         where: {
@@ -23,6 +25,6 @@ async function projects(parent, args, context) {
     })
     return {
         count,
-        where
+        where,
     }
 }

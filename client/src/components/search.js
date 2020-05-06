@@ -6,10 +6,11 @@ import Project from "./Project"
 
 
 const SEARCH_QUERY = gql `
-query SearchAllQueries($search: ProjectWhereInput) {
-  projects(where: $search) {
+query Filtering($filter: String){
+  projects(where: {projectName_contains:$filter}) {
     projectName
     description
+  
   }
 }
 `
@@ -41,10 +42,10 @@ class Search extends Component {
     }
 
     _executeSearch = async () => {
-        const { search } = this.state
+        const { filter } = this.state
         const result = await this.props.client.query({
             query: SEARCH_QUERY,
-            variables: { search },
+            variables: { filter },
         })
         const projects = result.data.projects
         this.setState({ projects })

@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import {Card, withStyles } from "@material-ui/core"
-import DeleteIcon from "@material-ui/icons/Delete"
+import Delete from "../components/updateandDelete"
 // 
 
 const styles = theme => ({
@@ -52,7 +52,7 @@ class Project extends Component {
                 </div>
 
 
-                <button onChange={e => e.preventDefault()} onClick={this.deleteHandler} > <DeleteIcon /></button>
+            <Delete />
             </Card>
         )
     }

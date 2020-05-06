@@ -1,12 +1,13 @@
 //install graphql-yoga and require it
-const {GraphQLServer} = require("graphql-yoga")
-
+const {ApolloServer} = require("apollo-server")
 const { prisma } = require("../prisma/..src/genertated/prisma-client")
 
 const Query = require("./resolvers/Query")
 const Mutation = require("./resolvers/Mutation")
 const Subscription = require("./resolvers/Subscription")
 
+
+const PORT = process.env.PORT || 8000
 
 
 
@@ -18,12 +19,11 @@ const resolvers ={
 }
 
 
-const server = new GraphQLServer({
-    typeDefs: "./src/schema.graphql",
-    resolvers,
-    context: {prisma}
-
+const server = new ApolloServer({
+     typeDefs: "./src/schema.graphql",
+      resolvers,
+    context: { prisma }
 })
 
-server.start(() => console.log(`server is up`))
-
+const { url } = server.listen(PORT)
+console.log(`===========${ url }==========`)

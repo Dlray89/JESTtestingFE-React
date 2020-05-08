@@ -295,9 +295,7 @@ export type TaskOrderByInput =
   | "taskName_ASC"
   | "taskName_DESC"
   | "taskDetails_ASC"
-  | "taskDetails_DESC"
-  | "completed_ASC"
-  | "completed_DESC";
+  | "taskDetails_DESC";
 
 export type ProjectOrderByInput =
   | "id_ASC"
@@ -494,9 +492,9 @@ export interface TaskWhereInput {
   taskDetails_not_starts_with?: Maybe<String>;
   taskDetails_ends_with?: Maybe<String>;
   taskDetails_not_ends_with?: Maybe<String>;
-  project?: Maybe<ProjectWhereInput>;
-  completed?: Maybe<Boolean>;
-  completed_not?: Maybe<Boolean>;
+  projects_every?: Maybe<ProjectWhereInput>;
+  projects_some?: Maybe<ProjectWhereInput>;
+  projects_none?: Maybe<ProjectWhereInput>;
   AND?: Maybe<TaskWhereInput[] | TaskWhereInput>;
   OR?: Maybe<TaskWhereInput[] | TaskWhereInput>;
   NOT?: Maybe<TaskWhereInput[] | TaskWhereInput>;
@@ -606,44 +604,43 @@ export interface ProjectCreateInput {
   id?: Maybe<ID_Input>;
   projectName: String;
   description: String;
-  tasks?: Maybe<TaskCreateManyWithoutProjectInput>;
+  tasks?: Maybe<TaskCreateManyWithoutProjectsInput>;
 }
 
-export interface TaskCreateManyWithoutProjectInput {
+export interface TaskCreateManyWithoutProjectsInput {
   create?: Maybe<
-    TaskCreateWithoutProjectInput[] | TaskCreateWithoutProjectInput
+    TaskCreateWithoutProjectsInput[] | TaskCreateWithoutProjectsInput
   >;
   connect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
 }
 
-export interface TaskCreateWithoutProjectInput {
+export interface TaskCreateWithoutProjectsInput {
   id?: Maybe<ID_Input>;
   taskName: String;
   taskDetails: String;
-  completed: Boolean;
 }
 
 export interface ProjectUpdateInput {
   projectName?: Maybe<String>;
   description?: Maybe<String>;
-  tasks?: Maybe<TaskUpdateManyWithoutProjectInput>;
+  tasks?: Maybe<TaskUpdateManyWithoutProjectsInput>;
 }
 
-export interface TaskUpdateManyWithoutProjectInput {
+export interface TaskUpdateManyWithoutProjectsInput {
   create?: Maybe<
-    TaskCreateWithoutProjectInput[] | TaskCreateWithoutProjectInput
+    TaskCreateWithoutProjectsInput[] | TaskCreateWithoutProjectsInput
   >;
   delete?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
   connect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
   set?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
   disconnect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
   update?: Maybe<
-    | TaskUpdateWithWhereUniqueWithoutProjectInput[]
-    | TaskUpdateWithWhereUniqueWithoutProjectInput
+    | TaskUpdateWithWhereUniqueWithoutProjectsInput[]
+    | TaskUpdateWithWhereUniqueWithoutProjectsInput
   >;
   upsert?: Maybe<
-    | TaskUpsertWithWhereUniqueWithoutProjectInput[]
-    | TaskUpsertWithWhereUniqueWithoutProjectInput
+    | TaskUpsertWithWhereUniqueWithoutProjectsInput[]
+    | TaskUpsertWithWhereUniqueWithoutProjectsInput
   >;
   deleteMany?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
   updateMany?: Maybe<
@@ -651,21 +648,20 @@ export interface TaskUpdateManyWithoutProjectInput {
   >;
 }
 
-export interface TaskUpdateWithWhereUniqueWithoutProjectInput {
+export interface TaskUpdateWithWhereUniqueWithoutProjectsInput {
   where: TaskWhereUniqueInput;
-  data: TaskUpdateWithoutProjectDataInput;
+  data: TaskUpdateWithoutProjectsDataInput;
 }
 
-export interface TaskUpdateWithoutProjectDataInput {
+export interface TaskUpdateWithoutProjectsDataInput {
   taskName?: Maybe<String>;
   taskDetails?: Maybe<String>;
-  completed?: Maybe<Boolean>;
 }
 
-export interface TaskUpsertWithWhereUniqueWithoutProjectInput {
+export interface TaskUpsertWithWhereUniqueWithoutProjectsInput {
   where: TaskWhereUniqueInput;
-  update: TaskUpdateWithoutProjectDataInput;
-  create: TaskCreateWithoutProjectInput;
+  update: TaskUpdateWithoutProjectsDataInput;
+  create: TaskCreateWithoutProjectsInput;
 }
 
 export interface TaskScalarWhereInput {
@@ -711,8 +707,6 @@ export interface TaskScalarWhereInput {
   taskDetails_not_starts_with?: Maybe<String>;
   taskDetails_ends_with?: Maybe<String>;
   taskDetails_not_ends_with?: Maybe<String>;
-  completed?: Maybe<Boolean>;
-  completed_not?: Maybe<Boolean>;
   AND?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
   OR?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
   NOT?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
@@ -726,7 +720,6 @@ export interface TaskUpdateManyWithWhereNestedInput {
 export interface TaskUpdateManyDataInput {
   taskName?: Maybe<String>;
   taskDetails?: Maybe<String>;
-  completed?: Maybe<Boolean>;
 }
 
 export interface ProjectUpdateManyMutationInput {
@@ -738,13 +731,14 @@ export interface TaskCreateInput {
   id?: Maybe<ID_Input>;
   taskName: String;
   taskDetails: String;
-  project: ProjectCreateOneWithoutTasksInput;
-  completed: Boolean;
+  projects?: Maybe<ProjectCreateManyWithoutTasksInput>;
 }
 
-export interface ProjectCreateOneWithoutTasksInput {
-  create?: Maybe<ProjectCreateWithoutTasksInput>;
-  connect?: Maybe<ProjectWhereUniqueInput>;
+export interface ProjectCreateManyWithoutTasksInput {
+  create?: Maybe<
+    ProjectCreateWithoutTasksInput[] | ProjectCreateWithoutTasksInput
+  >;
+  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
 }
 
 export interface ProjectCreateWithoutTasksInput {
@@ -756,15 +750,35 @@ export interface ProjectCreateWithoutTasksInput {
 export interface TaskUpdateInput {
   taskName?: Maybe<String>;
   taskDetails?: Maybe<String>;
-  project?: Maybe<ProjectUpdateOneRequiredWithoutTasksInput>;
-  completed?: Maybe<Boolean>;
+  projects?: Maybe<ProjectUpdateManyWithoutTasksInput>;
 }
 
-export interface ProjectUpdateOneRequiredWithoutTasksInput {
-  create?: Maybe<ProjectCreateWithoutTasksInput>;
-  update?: Maybe<ProjectUpdateWithoutTasksDataInput>;
-  upsert?: Maybe<ProjectUpsertWithoutTasksInput>;
-  connect?: Maybe<ProjectWhereUniqueInput>;
+export interface ProjectUpdateManyWithoutTasksInput {
+  create?: Maybe<
+    ProjectCreateWithoutTasksInput[] | ProjectCreateWithoutTasksInput
+  >;
+  delete?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  set?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  disconnect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  update?: Maybe<
+    | ProjectUpdateWithWhereUniqueWithoutTasksInput[]
+    | ProjectUpdateWithWhereUniqueWithoutTasksInput
+  >;
+  upsert?: Maybe<
+    | ProjectUpsertWithWhereUniqueWithoutTasksInput[]
+    | ProjectUpsertWithWhereUniqueWithoutTasksInput
+  >;
+  deleteMany?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
+  updateMany?: Maybe<
+    | ProjectUpdateManyWithWhereNestedInput[]
+    | ProjectUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ProjectUpdateWithWhereUniqueWithoutTasksInput {
+  where: ProjectWhereUniqueInput;
+  data: ProjectUpdateWithoutTasksDataInput;
 }
 
 export interface ProjectUpdateWithoutTasksDataInput {
@@ -772,15 +786,73 @@ export interface ProjectUpdateWithoutTasksDataInput {
   description?: Maybe<String>;
 }
 
-export interface ProjectUpsertWithoutTasksInput {
+export interface ProjectUpsertWithWhereUniqueWithoutTasksInput {
+  where: ProjectWhereUniqueInput;
   update: ProjectUpdateWithoutTasksDataInput;
   create: ProjectCreateWithoutTasksInput;
+}
+
+export interface ProjectScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  projectName?: Maybe<String>;
+  projectName_not?: Maybe<String>;
+  projectName_in?: Maybe<String[] | String>;
+  projectName_not_in?: Maybe<String[] | String>;
+  projectName_lt?: Maybe<String>;
+  projectName_lte?: Maybe<String>;
+  projectName_gt?: Maybe<String>;
+  projectName_gte?: Maybe<String>;
+  projectName_contains?: Maybe<String>;
+  projectName_not_contains?: Maybe<String>;
+  projectName_starts_with?: Maybe<String>;
+  projectName_not_starts_with?: Maybe<String>;
+  projectName_ends_with?: Maybe<String>;
+  projectName_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
+  OR?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
+  NOT?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
+}
+
+export interface ProjectUpdateManyWithWhereNestedInput {
+  where: ProjectScalarWhereInput;
+  data: ProjectUpdateManyDataInput;
+}
+
+export interface ProjectUpdateManyDataInput {
+  projectName?: Maybe<String>;
+  description?: Maybe<String>;
 }
 
 export interface TaskUpdateManyMutationInput {
   taskName?: Maybe<String>;
   taskDetails?: Maybe<String>;
-  completed?: Maybe<Boolean>;
 }
 
 export interface CheckListSubscriptionWhereInput {
@@ -1191,15 +1263,21 @@ export interface Task {
   id: ID_Output;
   taskName: String;
   taskDetails: String;
-  completed: Boolean;
 }
 
 export interface TaskPromise extends Promise<Task>, Fragmentable {
   id: () => Promise<ID_Output>;
   taskName: () => Promise<String>;
   taskDetails: () => Promise<String>;
-  project: <T = ProjectPromise>() => T;
-  completed: () => Promise<Boolean>;
+  projects: <T = FragmentableArray<Project>>(args?: {
+    where?: ProjectWhereInput;
+    orderBy?: ProjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface TaskSubscription
@@ -1208,8 +1286,15 @@ export interface TaskSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   taskName: () => Promise<AsyncIterator<String>>;
   taskDetails: () => Promise<AsyncIterator<String>>;
-  project: <T = ProjectSubscription>() => T;
-  completed: () => Promise<AsyncIterator<Boolean>>;
+  projects: <T = Promise<AsyncIterator<ProjectSubscription>>>(args?: {
+    where?: ProjectWhereInput;
+    orderBy?: ProjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface TaskNullablePromise
@@ -1218,8 +1303,15 @@ export interface TaskNullablePromise
   id: () => Promise<ID_Output>;
   taskName: () => Promise<String>;
   taskDetails: () => Promise<String>;
-  project: <T = ProjectPromise>() => T;
-  completed: () => Promise<Boolean>;
+  projects: <T = FragmentableArray<Project>>(args?: {
+    where?: ProjectWhereInput;
+    orderBy?: ProjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface ProjectConnection {
@@ -1563,7 +1655,6 @@ export interface TaskPreviousValues {
   id: ID_Output;
   taskName: String;
   taskDetails: String;
-  completed: Boolean;
 }
 
 export interface TaskPreviousValuesPromise
@@ -1572,7 +1663,6 @@ export interface TaskPreviousValuesPromise
   id: () => Promise<ID_Output>;
   taskName: () => Promise<String>;
   taskDetails: () => Promise<String>;
-  completed: () => Promise<Boolean>;
 }
 
 export interface TaskPreviousValuesSubscription
@@ -1581,7 +1671,6 @@ export interface TaskPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   taskName: () => Promise<AsyncIterator<String>>;
   taskDetails: () => Promise<AsyncIterator<String>>;
-  completed: () => Promise<AsyncIterator<Boolean>>;
 }
 
 /*

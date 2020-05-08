@@ -431,12 +431,12 @@ input ProjectCreateInput {
   id: ID
   projectName: String!
   description: String!
-  tasks: TaskCreateManyWithoutProjectInput
+  tasks: TaskCreateManyWithoutProjectsInput
 }
 
-input ProjectCreateOneWithoutTasksInput {
-  create: ProjectCreateWithoutTasksInput
-  connect: ProjectWhereUniqueInput
+input ProjectCreateManyWithoutTasksInput {
+  create: [ProjectCreateWithoutTasksInput!]
+  connect: [ProjectWhereUniqueInput!]
 }
 
 input ProjectCreateWithoutTasksInput {
@@ -465,6 +465,54 @@ type ProjectPreviousValues {
   description: String!
 }
 
+input ProjectScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  projectName: String
+  projectName_not: String
+  projectName_in: [String!]
+  projectName_not_in: [String!]
+  projectName_lt: String
+  projectName_lte: String
+  projectName_gt: String
+  projectName_gte: String
+  projectName_contains: String
+  projectName_not_contains: String
+  projectName_starts_with: String
+  projectName_not_starts_with: String
+  projectName_ends_with: String
+  projectName_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [ProjectScalarWhereInput!]
+  OR: [ProjectScalarWhereInput!]
+  NOT: [ProjectScalarWhereInput!]
+}
+
 type ProjectSubscriptionPayload {
   mutation: MutationType!
   node: Project
@@ -486,7 +534,12 @@ input ProjectSubscriptionWhereInput {
 input ProjectUpdateInput {
   projectName: String
   description: String
-  tasks: TaskUpdateManyWithoutProjectInput
+  tasks: TaskUpdateManyWithoutProjectsInput
+}
+
+input ProjectUpdateManyDataInput {
+  projectName: String
+  description: String
 }
 
 input ProjectUpdateManyMutationInput {
@@ -494,11 +547,21 @@ input ProjectUpdateManyMutationInput {
   description: String
 }
 
-input ProjectUpdateOneRequiredWithoutTasksInput {
-  create: ProjectCreateWithoutTasksInput
-  update: ProjectUpdateWithoutTasksDataInput
-  upsert: ProjectUpsertWithoutTasksInput
-  connect: ProjectWhereUniqueInput
+input ProjectUpdateManyWithoutTasksInput {
+  create: [ProjectCreateWithoutTasksInput!]
+  delete: [ProjectWhereUniqueInput!]
+  connect: [ProjectWhereUniqueInput!]
+  set: [ProjectWhereUniqueInput!]
+  disconnect: [ProjectWhereUniqueInput!]
+  update: [ProjectUpdateWithWhereUniqueWithoutTasksInput!]
+  upsert: [ProjectUpsertWithWhereUniqueWithoutTasksInput!]
+  deleteMany: [ProjectScalarWhereInput!]
+  updateMany: [ProjectUpdateManyWithWhereNestedInput!]
+}
+
+input ProjectUpdateManyWithWhereNestedInput {
+  where: ProjectScalarWhereInput!
+  data: ProjectUpdateManyDataInput!
 }
 
 input ProjectUpdateWithoutTasksDataInput {
@@ -506,7 +569,13 @@ input ProjectUpdateWithoutTasksDataInput {
   description: String
 }
 
-input ProjectUpsertWithoutTasksInput {
+input ProjectUpdateWithWhereUniqueWithoutTasksInput {
+  where: ProjectWhereUniqueInput!
+  data: ProjectUpdateWithoutTasksDataInput!
+}
+
+input ProjectUpsertWithWhereUniqueWithoutTasksInput {
+  where: ProjectWhereUniqueInput!
   update: ProjectUpdateWithoutTasksDataInput!
   create: ProjectCreateWithoutTasksInput!
 }
@@ -597,8 +666,7 @@ type Task {
   id: ID!
   taskName: String!
   taskDetails: String!
-  project: Project!
-  completed: Boolean!
+  projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project!]
 }
 
 type TaskConnection {
@@ -611,20 +679,18 @@ input TaskCreateInput {
   id: ID
   taskName: String!
   taskDetails: String!
-  project: ProjectCreateOneWithoutTasksInput!
-  completed: Boolean!
+  projects: ProjectCreateManyWithoutTasksInput
 }
 
-input TaskCreateManyWithoutProjectInput {
-  create: [TaskCreateWithoutProjectInput!]
+input TaskCreateManyWithoutProjectsInput {
+  create: [TaskCreateWithoutProjectsInput!]
   connect: [TaskWhereUniqueInput!]
 }
 
-input TaskCreateWithoutProjectInput {
+input TaskCreateWithoutProjectsInput {
   id: ID
   taskName: String!
   taskDetails: String!
-  completed: Boolean!
 }
 
 type TaskEdge {
@@ -639,15 +705,12 @@ enum TaskOrderByInput {
   taskName_DESC
   taskDetails_ASC
   taskDetails_DESC
-  completed_ASC
-  completed_DESC
 }
 
 type TaskPreviousValues {
   id: ID!
   taskName: String!
   taskDetails: String!
-  completed: Boolean!
 }
 
 input TaskScalarWhereInput {
@@ -693,8 +756,6 @@ input TaskScalarWhereInput {
   taskDetails_not_starts_with: String
   taskDetails_ends_with: String
   taskDetails_not_ends_with: String
-  completed: Boolean
-  completed_not: Boolean
   AND: [TaskScalarWhereInput!]
   OR: [TaskScalarWhereInput!]
   NOT: [TaskScalarWhereInput!]
@@ -721,30 +782,27 @@ input TaskSubscriptionWhereInput {
 input TaskUpdateInput {
   taskName: String
   taskDetails: String
-  project: ProjectUpdateOneRequiredWithoutTasksInput
-  completed: Boolean
+  projects: ProjectUpdateManyWithoutTasksInput
 }
 
 input TaskUpdateManyDataInput {
   taskName: String
   taskDetails: String
-  completed: Boolean
 }
 
 input TaskUpdateManyMutationInput {
   taskName: String
   taskDetails: String
-  completed: Boolean
 }
 
-input TaskUpdateManyWithoutProjectInput {
-  create: [TaskCreateWithoutProjectInput!]
+input TaskUpdateManyWithoutProjectsInput {
+  create: [TaskCreateWithoutProjectsInput!]
   delete: [TaskWhereUniqueInput!]
   connect: [TaskWhereUniqueInput!]
   set: [TaskWhereUniqueInput!]
   disconnect: [TaskWhereUniqueInput!]
-  update: [TaskUpdateWithWhereUniqueWithoutProjectInput!]
-  upsert: [TaskUpsertWithWhereUniqueWithoutProjectInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutProjectsInput!]
+  upsert: [TaskUpsertWithWhereUniqueWithoutProjectsInput!]
   deleteMany: [TaskScalarWhereInput!]
   updateMany: [TaskUpdateManyWithWhereNestedInput!]
 }
@@ -754,21 +812,20 @@ input TaskUpdateManyWithWhereNestedInput {
   data: TaskUpdateManyDataInput!
 }
 
-input TaskUpdateWithoutProjectDataInput {
+input TaskUpdateWithoutProjectsDataInput {
   taskName: String
   taskDetails: String
-  completed: Boolean
 }
 
-input TaskUpdateWithWhereUniqueWithoutProjectInput {
+input TaskUpdateWithWhereUniqueWithoutProjectsInput {
   where: TaskWhereUniqueInput!
-  data: TaskUpdateWithoutProjectDataInput!
+  data: TaskUpdateWithoutProjectsDataInput!
 }
 
-input TaskUpsertWithWhereUniqueWithoutProjectInput {
+input TaskUpsertWithWhereUniqueWithoutProjectsInput {
   where: TaskWhereUniqueInput!
-  update: TaskUpdateWithoutProjectDataInput!
-  create: TaskCreateWithoutProjectInput!
+  update: TaskUpdateWithoutProjectsDataInput!
+  create: TaskCreateWithoutProjectsInput!
 }
 
 input TaskWhereInput {
@@ -814,9 +871,9 @@ input TaskWhereInput {
   taskDetails_not_starts_with: String
   taskDetails_ends_with: String
   taskDetails_not_ends_with: String
-  project: ProjectWhereInput
-  completed: Boolean
-  completed_not: Boolean
+  projects_every: ProjectWhereInput
+  projects_some: ProjectWhereInput
+  projects_none: ProjectWhereInput
   AND: [TaskWhereInput!]
   OR: [TaskWhereInput!]
   NOT: [TaskWhereInput!]

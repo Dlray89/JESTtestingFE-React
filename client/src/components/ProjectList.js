@@ -1,8 +1,8 @@
 import React, { Component} from "react"
 import { Query} from "react-apollo"
 import gql from "graphql-tag"
-import Project from "./Project"
-import { withStyles } from "@material-ui/core"
+// import Project from "./Project"
+import { withStyles, Card, CardHeader, CardContent,CardActionArea, Typography } from "@material-ui/core"
 
 const style = theme => ({
     root: {
@@ -31,10 +31,6 @@ query AllProjects {
 
 
 
-
-console.log(FEED_QUERY)
-
-
 class ProjectList extends Component {
    
  render(){
@@ -48,14 +44,27 @@ class ProjectList extends Component {
                     if (error) return <div>Error</div>
 
                     const projectData = data.projects
-                    console.log(projectData)
+                 
+
 
                     return (
-                        <div className={classes.root} style={{ width:"55%"}} >
-                            {projectData.map(project => 
-                       
-                <Project key={project.id} project={project} projectTask={project.tasks}
-                              />
+                        <div className={classes.root} style={{ width:"100%", border:'solid 2px red'}} >
+                            {projectData.map((project) => 
+                            <Card style={{border:"solid 2px green", width:"20%"}}>
+                            <CardHeader title={project.projectName} subheader={project.description}/>
+                              
+                                
+                                <CardContent>
+                                    {project.tasks.map((task) => 
+                                        <Typography variant={"body1"}>
+                                           Task Name: <br/> 
+                                           {task.taskName} <br/>
+                                            Task Details: <br/>
+                                             {task.taskDetails}
+                                        </Typography>
+                                        )}
+                                </CardContent>
+                            </Card>
                                 
                             
                             )}

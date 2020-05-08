@@ -2,9 +2,9 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import { Query } from "react-apollo"
 import gql from "graphql-tag"
-import RecentProject from "./Recent_Project"
+// import RecentProject from "./Recent_Project"
 import Clock from "../tools/clock"
-import { Typography, Card, CardHeader, CardActionArea, Button, withStyles } from "@material-ui/core"
+import { Typography, Card, CardHeader, CardContent, CardActionArea, Button, withStyles } from "@material-ui/core"
 
 const styles = theme => ({
     card: {
@@ -53,12 +53,19 @@ const styles = theme => ({
 })
 
 const SINGLE_PROJECT_QUERY = gql`
-query {
-  projects(last: 1) {
+
+query AllProjects {
+  projects(last:1) {
     id
     projectName
     description
+    tasks {
+      id
+      taskName
+      taskDetails
+    }
   }
+  
 }
 `
 class Dashboard extends Component {
@@ -82,8 +89,25 @@ class Dashboard extends Component {
                             </Typography >
 
                             <div className={classes.card}  >
-                                {projects.map(project =>
-                                    <RecentProject key={project.id} project={project} />)}
+                                {projects.map((project) =>
+
+                                <Card style={{border:'solid 1px blue'}}>
+                                    
+                                    <CardHeader title={project.projectName} subheader={project.description}  />
+                                        {project.tasks.map((task) => 
+                                            <CardContent>
+                                                Task Name: <br />
+                                                {task.taskName} <br/>
+                                                Task Details: <br />{task.taskDetails}
+                                            </CardContent>
+                                            )}
+                                    
+                                </Card>  
+
+
+                                    // <RecentProject key={project.id} project={project} />
+                                    
+                                    )}
                             </div>
 
                             <div className={classes.Hub} >

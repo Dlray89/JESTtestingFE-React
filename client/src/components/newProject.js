@@ -11,16 +11,16 @@ import AddBoxIcon from '@material-ui/icons/AddBox';import {TextField, Button, Ty
 import ProjectList from "./ProjectList"
 
 const POST_MUTATION = gql `
-mutation CreateProject($newProject: ProjectCreateInput!){
-  createProject(data: $newProject){
-    id
+mutation NewProject($new: String!){
+  createProject(data:{projectName:$new, description:$new,
+    tasks:{create:{taskName:$new, taskDetails:$new}}}){
+        id
     projectName
     description
     tasks {
-      id
+        id
       taskName
       taskDetails
-      completed
     }
   }
 }
@@ -41,7 +41,7 @@ class NewProject extends Component {
     }
 
     render() {
-        const { projectName, description} = this.state
+        const { projectName, description, taskName, taskDetails} = this.state
         return(
             <div style={{display:"flex", justifyContent:"space-between"}}>
                 <Card style={{textAlign:"center", background:"#aeaeb1", color: "white", width:"40%", margin:"2% auto", height:"70vh"}} onSubmit={e => {e.preventDefault(); this.resetForm() }}>
@@ -68,10 +68,26 @@ class NewProject extends Component {
                             type="text"
                             placeholder="Project details"
                         />
+                           <TextField 
+                        style={{margin:" 2% auto", width:"60%", textAlign:"center", color:"#000f89"}}
+                            value={taskName}
+                            variant="outlined"
+                            onChange={e => this.setState({ taskName: e.target.value})}
+                            type="text"
+                            placeholder="Task Name"
+                        />
+                           <TextField 
+                        style={{margin:" 2% auto", width:"60%", textAlign:"center", color:"#000f89"}}
+                            value={taskDetails}
+                            variant="outlined"
+                            onChange={e => this.setState({ taskDetails: e.target.value})}
+                            type="text"
+                            placeholder="Task Details"
+                        />
                         <br />
                         <Mutation 
                          mutation={POST_MUTATION} 
-                         variables={{ newProject: {projectName, description} }}
+                         variables={{ new: {projectName, description, taskName, taskDetails} }}
                         //  onCompleted={() => this.props.push()
                         refetchQueries={[
                             {
@@ -79,6 +95,7 @@ class NewProject extends Component {
                             }
                         ]}
                          >
+                         
                         {postMutation => <Button style={{background:"#000f89", color:"white"}} onClick={postMutation}><AddBoxIcon /></Button>}
                         </Mutation>
                        

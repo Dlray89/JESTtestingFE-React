@@ -1,6 +1,6 @@
 import React, { Component } from "react"
-import {Card, withStyles } from "@material-ui/core"
-import DeleteIcon from "@material-ui/icons/Delete"
+import {Card, withStyles, CardHeader} from "@material-ui/core"
+import Delete from "../components/updateandDelete"
 // 
 
 const styles = theme => ({
@@ -38,6 +38,7 @@ class Project extends Component {
         const { classes } = this.props
         return (
             <Card className={classes.root} key={this.props.project.id}>
+<<<<<<< HEAD
                 <div style={{background:"#000f89", padding: "3%", color: "white"}}>
                     Project ID#: <br />
                     {this.props.project.id}<br />
@@ -62,6 +63,10 @@ class Project extends Component {
 
 
                 <button onChange={e => e.preventDefault()} onClick={this.deleteHandler} > <DeleteIcon /></button>
+=======
+            <CardHeader  title={this.props.project.projectName} subheader={this.props.project.description} />
+            <Delete />
+>>>>>>> 168ce9e12cbeaf83789be01eccac6a73ed35b6d2
             </Card>
         )
     }

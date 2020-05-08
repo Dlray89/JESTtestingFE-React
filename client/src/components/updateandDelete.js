@@ -1,86 +1,99 @@
 import React, { Component } from "react"
-import { Mutation, Query } from "react-apollo"
+import { FEED_QUERY } from "./ProjectList"
+import { ApolloConsumer } from "react-apollo"
 
 import gql from "graphql-tag"
 
 
-const UPDATE_MUTATION = gql `
-mutation UpdateProject($update: ProjectUpdateInput!, $where: ProjectWhereUniqueInput!){
-  updateProject(data: $update, where: $where){
-    projectName
-    description
-    id
-  }
-}
-
-`
-
-const FEED_QUERY = gql `
-query AllProjects {
-  projects {
-    id
-    projectName
-    description
-  }
-}
-`
-
-// export const DELETE_MUTATION = gql `
-// mutation DeleteProject($where: ProjectWhereUniqueInput!){
-// 	deleteProject(where: $where){
+// const UPDATE_MUTATION = gql `
+// mutation UpdateProject($update: ProjectUpdateInput!, $where: ProjectWhereUniqueInput!){
+//   updateProject(data: $update, where: $where){
+//     projectName
+//     description
 //     id
+//   }
+// }
+
+// `
+
+// const FEED_QUERY = gql `
+// query AllProjects {
+//   projects {
+//     id
+//     projectName
+//     description
 //   }
 // }
 // `
 
-const UpdateProject = () => (
-<Query query={FEED_QUERY}>
-{({ Loading, error, data}) => {
+export const DELETE_MUTATION = gql`
+mutation removeProject($delete: ID!){
+  deleteProject(where:{id:$delete}){
+    id
+  }
+}
+`
 
 
-    if(Loading) return <p>Loading...</p>
-    if(error) return <p>Error...</p>
-
-    const ProjectsData = data.projects
-
-    return ProjectsData.map(project => ({ id: type}) => {
-        let input;
-
-        return(
-
-            <Mutation mutation={UPDATE_MUTATION} >
-            {updateProject => (
-                <div 
->
-                    {type}
-                    <form onSubmit={e => {
-                        e.preventDefault()
-                        updateProject({ variables: {id: input.value, type: input.value } })
-
-                        input.value = ''
-                    }}>
-                    <div>
-                
-                    <input 
-                    type="text"
-                    ref={node => {
-                        input = node;
-                    }} />
-
-                    <button>Update</button>
-</div>
-                    </form>
-                </div>
-            )}
 
 
-            </Mutation>
+
+class RemoveProject extends Component {
+    state = {
+        projects: {
+            id: ''
+
+        }
+    }
+
+    handleDelete = (client) => async () => {
+        const { id } = this.props
+        await this.setState({ id: '' })
+        await client.mutate({
+            mutation: DELETE_MUTATION,
+            variables: { id },
+            update: this.handleUpdate
+        })
+    }
+
+    handleUpdate = (cache, { data: { deleteProject } }) => {
+        const { projects } = cache.readQuery({ query: FEED_QUERY })
+
+        this.setState({ id: '' })
+
+        if (deleteProject) {
+            const removeProject = projects.findIndex((project) => project.id === deleteProject.id)
+            projects.splice(removeProject, 1)
+
+
+            cache.writeQuery({
+                query: FEED_QUERY,
+                data: { projects },
+            })
+        }
+    }
+
+    render() {
+const { id } = this.state
+
+        return (
+            <ApolloConsumer>
+                {(client) => {
+                    return (
+                        <div>
+                            <button value={id} onClick={this.handleDelete(client)}>X</button>
+                        </div>
+                    )
+                }}
+            </ApolloConsumer>
         )
-    })
-}}
+    }
+
+}
 
 
-</Query>
-)
 
-export default UpdateProject
+
+
+
+export default RemoveProject

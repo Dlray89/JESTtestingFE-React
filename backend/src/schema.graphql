@@ -1,10 +1,17 @@
+
+
+
+
+
+
 type Query {
     info: String!
-    feed(filter: String ): [Project!]!
+    projects(filter: String): [Project!]!
 }
 
 type Mutation {
     post(projectName: String!, description: String!): Project!
+    remove(id:ID!): Project
 }
 
 type Subscription {
@@ -17,4 +24,3 @@ type Project {
     description: String!
     createdAt: DateTime!
 }
-

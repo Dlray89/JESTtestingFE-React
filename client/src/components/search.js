@@ -2,6 +2,7 @@ import React, { Component} from "react"
 import { withApollo} from "react-apollo"
 import gql from "graphql-tag"
 import Project from "./Project"
+import { TextField, Button } from "@material-ui/core"
 
 
 
@@ -26,13 +27,17 @@ class Search extends Component {
         e.preventDefault()
         this.setState({filter:""})
     }
-
+ 
     render(){
         return(
             <div>
-                <form onSubmit={this.resetform}>
-                    <input type="text" onChange={e => this.setState({ filter: e.target.value})}  />
-                    <button onClick={() => this._executeSearch()}>Search</button>
+                <form style={{textAlign:"center", display:"flex", alignContent:"center", justifyContent:"center", margin:"5% 0" }} onSubmit={this.resetform}>
+
+
+                    <TextField variant="outlined" style={{ width:"50%"}} type="text" onChange={e => this.setState({ filter: e.target.value})}  />
+
+                    
+                    <Button variant="outlined" onClick={() => this._executeSearch()}>Search</Button>
                 </form>
                 {this.state.projects.map((project, index) => (
                     <Project key={project.id} project={project}  index={index}    />

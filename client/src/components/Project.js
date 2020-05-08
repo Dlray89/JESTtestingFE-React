@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import {Card, withStyles } from "@material-ui/core"
+import {Card, withStyles, CardHeader} from "@material-ui/core"
 import Delete from "../components/updateandDelete"
 // 
 
@@ -33,25 +33,7 @@ class Project extends Component {
         const { classes } = this.props
         return (
             <Card className={classes.root} key={this.props.project.id}>
-                <div style={{background:"#000f89", padding: "3%", color: "white"}}>
-                    Project ID#: <br />
-                    {this.props.project.id}<br />
-                </div>
-
-                
-                <div>
-                    Project Name: <br />
-                    {this.props.project.projectName} <br />
-                </div>
-                _____________________________<br />
-                <div>
-                    Project description: <br />
-                    {this.props.project.description}
-                    <br />
-                    <br/>
-                </div>
-
-
+            <CardHeader  title={this.props.project.projectName} subheader={this.props.project.description} />
             <Delete />
             </Card>
         )

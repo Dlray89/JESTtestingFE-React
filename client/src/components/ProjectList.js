@@ -2,20 +2,28 @@ import React, { Component} from "react"
 import { Query} from "react-apollo"
 import gql from "graphql-tag"
 // import Project from "./Project"
-import { withStyles, Card, CardHeader, CardContent,CardActionArea, Typography } from "@material-ui/core"
+import { withStyles, Card, CardHeader, CardContent, Typography } from "@material-ui/core"
 
 const style = theme => ({
     root: {
         display: "flex",
         flexWrap:"wrap",
+        flexDirection:"row",
         justifyContent:"space-around",
-        margin: " 2% 0 2% 0"
+        alignItems:"center",
+        margin:"2% auto",
+         width:"70%", 
+    },
+    Card: {
+        border:"solid 2px green", 
+        width:"25%",
+        margin: "2% auto"
     }
 })
 
 export const FEED_QUERY = gql `
 query AllProjects {
-  projects {
+  projects(last: 2) {
     id
     projectName
     description
@@ -48,9 +56,9 @@ class ProjectList extends Component {
 
 
                     return (
-                        <div className={classes.root} style={{ width:"100%", border:'solid 2px red'}} >
+                        <div className={classes.root}  >
                             {projectData.map((project) => 
-                            <Card style={{border:"solid 2px green", width:"20%"}}>
+                            <Card className={classes.Card}>
                             <CardHeader title={project.projectName} subheader={project.description}/>
                               
                                 

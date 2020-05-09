@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Switch, Route} from "react-router-dom"
 import './App.css';
 import ProjectList from "./components/ProjectList"
-import NewProject from "./components/newProject"
+import NewProject from "./tools/modal.js"
 import Dashboard from "./components/dashboard"
 import Checklist from "./checkllist.js/ItemsCheckList"
 import Search from "./components/search"

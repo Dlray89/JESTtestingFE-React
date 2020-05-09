@@ -1,21 +1,22 @@
-import React, { Component} from "react"
-import { Query} from "react-apollo"
+import React, { Component } from "react"
+import { Query } from "react-apollo"
 import gql from "graphql-tag"
 import Project from "./Project"
 import { withStyles } from "@material-ui/core"
 
+
 const style = theme => ({
     root: {
         display: "flex",
-        flexWrap:"wrap",
-        justifyContent:"space-around",
-        margin: " 2% 0 2% 0"
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+        margin: "0 auto"
     }
 })
 
-export const FEED_QUERY = gql `
+export const FEED_QUERY = gql`
 query AllProjects {
-  projects {
+  projects(last:3) {
     id
     projectName
     description
@@ -30,38 +31,40 @@ console.log(FEED_QUERY)
 
 
 class ProjectList extends Component {
-   
- render(){
-    
-    const{ classes} = this.props
 
-        return(
+    render() {
+
+        const { classes } = this.props
+
+        return (
             <Query query={FEED_QUERY}>
-                {({ loading, error, data}) => {
+                {({ loading, error, data }) => {
                     if (loading) return <div>Fetching</div>
                     if (error) return <div>Error</div>
 
                     const projectData = data.projects
 
                     return (
-                        <div className={classes.root} style={{ width:"55%"}} >
-                        
-                            {projectData.map(project => 
-                       
-                <Project key={project.id} project={project} 
-                              />
-                                
-                            
+                        <div className={classes.root} style={{ width: "55%" }} >
+
+                            {projectData.map(project =>
+
+                                <Project key={project.id} project={project}
+                                />
+
+
                             )}
 
                         </div>
                     )
 
                 }}
+
+
             </Query>
         )
     }
 }
 
-export default withStyles(style, {withTheme: true})(ProjectList)
+export default withStyles(style, { withTheme: true })(ProjectList)
 

@@ -4,43 +4,43 @@
 
 import React, { Component } from "react"
 import { Mutation } from "react-apollo"
-import { FEED_QUERY } from "./ProjectList"
+import {TASK_QUERY} from "./taskList"
 import gql from "graphql-tag"
 
 import AddBoxIcon from '@material-ui/icons/AddBox';import {TextField, Button, Typography} from "@material-ui/core"
 
-const POST_MUTATION = gql `
-mutation CreateProject($newProject: ProjectCreateInput!) {
-  createProject(data: $newProject) {
+const TASK_MUTATION = gql `
+mutation CreateTask($newTask: TaskCreateInput!) {
+  createTask(data: $newTask) {
     id
-    projectName
-    description
+    taskName
+    taskDetails
   }
 }
 `
 
-class NewProject extends Component {
+class NewTasks extends Component {
     state = {
-        projectName: "",
-        description: ''
+        taskName: "",
+        taskDetails: ''
     }
 
     resetForm = e => {
-        this.setState({ projectName: "", description: ""})
+        this.setState({ taskName: "", taskDetails: ""})
     }
 
     render() {
-        const { projectName, description} = this.state
+        const { taskName, taskDetails} = this.state
         return(
             <div >
                 <div onSubmit={e => {e.preventDefault(); this.resetForm() }}>
                         <TextField 
                             style={{width: "100%", margin:"3% 0"}}
-                            value={projectName}
+                            value={taskName}
                             variant="outlined"
-                            onChange={e => this.setState({ projectName: e.target.value})}
+                            onChange={e => this.setState({ taskName: e.target.value})}
                             type="text"
-                            placeholder="Name"
+                            placeholder="Task Name"
                         />
                         <br />
                         <TextField 
@@ -49,19 +49,19 @@ class NewProject extends Component {
                         variant="outlined"
                         multiline
                         rows={4}
-                            value={description}
-                            onChange={e => this.setState({ description: e.target.value})}
+                            value={taskDetails}
+                            onChange={e => this.setState({ taskDetails: e.target.value})}
                             type="text"
-                            placeholder="Project details"
+                            placeholder="Task details"
                         />
                         <br />
                         <Mutation 
-                         mutation={POST_MUTATION} 
-                         variables={{ newProject: {projectName, description} }}
+                         mutation={TASK_MUTATION} 
+                         variables={{ newTask: {taskName, taskDetails} }}
                         //  onCompleted={() => this.props.push()
                         refetchQueries={[
                             {
-                                query: FEED_QUERY
+                                query: TASK_QUERY
                             }
                         ]}
                          >
@@ -74,4 +74,4 @@ class NewProject extends Component {
     }
 }
 
-export default NewProject
+export default NewTasks

@@ -22,9 +22,10 @@ class Project extends Component {
         }
     }
 
-    deleteHandler = id => {
-        const projects = this.state.projects.filter(project => project.id !== id)
-        this.setState({ projects: projects })
+    deleteHandler = index =>{
+        const newProjects = [...this.state.projects]
+        newProjects.splice(index, 1)
+        this.setState({ projects: newProjects})
     }
 
 
@@ -34,7 +35,7 @@ class Project extends Component {
         return (
             <Card className={classes.root} key={this.props.project.id}>
             <CardHeader  title={this.props.project.projectName} subheader={this.props.project.description} />
-            <Delete />
+            <Delete onDelete={this.deleteHandler} />
             </Card>
         )
     }

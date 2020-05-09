@@ -46,15 +46,23 @@ class RemoveProject extends Component {
         }
     }
 
-    handleDelete = (client) => async () => {
-        const { id } = this.props
-        await this.setState({ id: '' })
-        await client.mutate({
-            mutation: DELETE_MUTATION,
-            variables: { id },
-            update: this.handleUpdate
-        })
+    // handleDelete = (client) => async () => {
+    //     const { id } = this.props
+    //     await this.setState({ id: '' })
+    //     await client.mutate({
+    //         mutation: DELETE_MUTATION,
+    //         variables: { id },
+    //         update: this.handleUpdate
+    //     })
+    // }
+
+     deleteHandler = index =>{
+        const newProjects = [...this.state.projects]
+        newProjects.splice(index, 1)
+        this.setState({ projects: newProjects})
     }
+
+    
 
     handleUpdate = (cache, { data: { deleteProject } }) => {
         const { projects } = cache.readQuery({ query: FEED_QUERY })
@@ -73,7 +81,7 @@ class RemoveProject extends Component {
         }
     }
 
-    render() {
+    render(props) {
 const { id } = this.state
 
         return (
@@ -81,7 +89,7 @@ const { id } = this.state
                 {(client) => {
                     return (
                         <div>
-                            <button value={id} onClick={this.handleDelete(client)}>X</button>
+                            <button onClick={this.deleteHandler} value={id}>X</button>
                         </div>
                     )
                 }}

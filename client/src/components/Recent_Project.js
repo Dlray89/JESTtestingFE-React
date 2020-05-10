@@ -1,14 +1,16 @@
 import React, { Component } from "react"
-import { Card, withStyles } from "@material-ui/core"
-import DeleteIcon from "@material-ui/icons/Delete"
+import { Card, CardHeader, withStyles, CardActionArea, Button, Typography } from "@material-ui/core"
 // 
 
 const styles = theme => ({
     root: {
-        margin: "2% 0 2% 0",
+        margin: "0 auto",
         border: "solid 1px black",
-        width: "30%",
+        width: "45%",
         textAlign: "center"
+    },
+    button: {
+        margin: "4% 0"
     }
 })
 
@@ -34,25 +36,16 @@ class RecentProject extends Component {
         return (
             <div style={{ width: "100%" }}>
                 Most Recent project
-            <Card style={{ width: "55%", margin: "0 auto" }} className={classes.root} key={this.props.project.id}>
-                    <div style={{ background: "#000f89", padding: "3%", color: "white", textAlign: "center" }}>
-                        Project ID#: <br />
-                        {this.props.project.id}<br />
-                    </div>
+            <Card  className={classes.root} key={this.props.project.id}>
+                <CardHeader title={this.props.project.projectName} subheader={this.props.project.description} />
+                <Typography variant="body1">
+                    List of tasks** <br />
+                    The last updated journal entry to this project
 
-                    ___________________________________<br />
-                    <div>
-                        Project Name: <br />
-                        {this.props.project.projectName} <br />
-                    </div>
-                    <div>
-                        Project description: <br />
-                        {this.props.project.description}
-                        <br />
-                    </div>
+                </Typography>
 
-
-                    <button onChange={e => e.preventDefault()} onClick={this.deleteHandler} > <DeleteIcon /></button>
+                <CardActionArea><Button variant="outlined" color="primary" className={classes.button}>View More</Button></CardActionArea>
+               
                 </Card>
 
                

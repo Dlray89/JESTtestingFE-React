@@ -3,10 +3,7 @@ const { prisma } = require("../../prisma/..src/genertated/prisma-client")
 
 
 function post(parent, args, context, info) {
-    return context.prisma.createProject({
-        projectName: args.projectName,
-        description: args.description
-    })
+    return context.prisma.createProject(args.data)
 }
 
 function remove(parent, args,context,info) {

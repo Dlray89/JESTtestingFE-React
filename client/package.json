@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.9.11",
+    "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -15,16 +15,13 @@
     "faker": "^4.1.0",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
-<<<<<<< HEAD
-    "graphql-yoga": "^1.18.3",
-=======
     "lodash": "^4.17.15",
->>>>>>> f93e87d5bae9791af7ec453c8d1eeac2c94c77ab
     "react": "^16.13.1",
     "react-apollo": "^3.1.5",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "reactjs-popup": "^1.5.0",
     "semantic-ui-react": "^0.88.2"
   },
   "scripts": {

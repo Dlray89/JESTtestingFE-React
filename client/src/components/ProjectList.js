@@ -1,33 +1,45 @@
 import React, { Component } from "react"
 import { Query } from "react-apollo"
 import gql from "graphql-tag"
-import Project from "./Project"
-import { withStyles } from "@material-ui/core"
+// import Project from "./Project"
+import { withStyles, Card, CardHeader, CardContent, Typography } from "@material-ui/core"
+
+import Delete from "./updateandDelete"
 
 
 const style = theme => ({
     root: {
         display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-around",
-        margin: "0 auto"
+        flexWrap:"wrap",
+        flexDirection:"row",
+        justifyContent:"space-around",
+        alignItems:"center",
+        margin:"2% auto",
+         width:"70%", 
+    },
+    Card: {
+        border:"solid 2px green", 
+        width:"25%",
+        margin: "2% auto"
     }
 })
 
 export const FEED_QUERY = gql`
 query AllProjects {
-  projects(last:3) {
+  projects(last: 2) {
     id
     projectName
     description
+    tasks {
+      id
+      taskName
+      taskDetails
+    }
   }
+  
 }
 `
 
-
-
-
-console.log(FEED_QUERY)
 
 
 class ProjectList extends Component {
@@ -43,16 +55,30 @@ class ProjectList extends Component {
                     if (error) return <div>Error</div>
 
                     const projectData = data.projects
+                 
+
 
                     return (
-                        <div className={classes.root} style={{ width: "55%" }} >
-
-                            {projectData.map(project =>
-
-                                <Project key={project.id} project={project}
-                                />
-
-
+                        <div className={classes.root}  >
+                            {projectData.map((project) => 
+                            <Card className={classes.Card}>
+                            <CardHeader title={project.projectName} subheader={project.description}/>
+                              
+                                
+                                <CardContent>
+                                    {project.tasks.map((task) => 
+                                        <Typography variant={"body1"}>
+                                           Task Name: <br/> 
+                                           {task.taskName} <br/>
+                                            Task Details: <br/>
+                                             {task.taskDetails}
+                                        </Typography>
+                                        )}
+                                </CardContent>
+                                <Delete key={project.id}/>
+                            </Card>
+                                
+                            
                             )}
 
                         </div>

@@ -6,58 +6,80 @@ import React, { Component } from "react"
 import { Mutation } from "react-apollo"
 import { FEED_QUERY } from "./ProjectList"
 import gql from "graphql-tag"
-
-import AddBoxIcon from '@material-ui/icons/AddBox';import {TextField, Button, Typography} from "@material-ui/core"
+import {TextField, Button } from "@material-ui/core"
 
 const POST_MUTATION = gql `
-mutation CreateProject($newProject: ProjectCreateInput!) {
-  createProject(data: $newProject) {
-    id
+mutation NewProject($PN:String!, $des: String!, $TN: String!, $TD: String!) {
+  createProject(data:{projectName:$PN, description:$des,tasks:{create:{taskName:$TN,taskDetails:$TD}}}){
     projectName
     description
+    tasks {
+      taskName
+      taskDetails
+    }
   }
 }
 `
 
 class NewProject extends Component {
     state = {
-        projectName: "",
-        description: ''
+        PN: "",
+        des: '',
+        tasks:[{
+            TN: "",
+            TD:""
+        }]
     }
 
     resetForm = e => {
-        this.setState({ projectName: "", description: ""})
+        this.setState({ PN: "", des: ""})
     }
 
     render() {
-        const { projectName, description} = this.state
+        const { PN, des, TN, TD} = this.state
         return(
             <div >
                 <div onSubmit={e => {e.preventDefault(); this.resetForm() }}>
                         <TextField 
-                            style={{width: "100%", margin:"3% 0"}}
-                            value={projectName}
-                            variant="outlined"
-                            onChange={e => this.setState({ projectName: e.target.value})}
+                            value={PN}
+                           style={{width:"100%"}}
+                            onChange={e => this.setState({ PN: e.target.value})}
                             type="text"
-                            placeholder="Name"
+                            placeholder="Project Name"
                         />
                         <br />
+                        
                         <TextField 
-                        style={{width: "100%", margin:"3% 0"}}
-
                         variant="outlined"
                         multiline
-                        rows={4}
-                            value={description}
-                            onChange={e => this.setState({ description: e.target.value})}
+                        rows={6}
+                        style={{width:"100%", margin:"4% 0"}}
+                            value={des}
+                            onChange={e => this.setState({ des: e.target.value})}
                             type="text"
                             placeholder="Project details"
+                        /> <br />
+                           <TextField 
+                        
+                            value={TN}
+                            variant="outlined"
+                            onChange={e => this.setState({ TN: e.target.value})}
+                            type="text"
+                            placeholder="Task Name"
+                        />
+                           <TextField 
+                       
+                            value={TD}
+                            variant="outlined"
+                            onChange={e => this.setState({ TD: e.target.value})}
+                            type="text"
+                            placeholder="Task Details"
                         />
                         <br />
+                      
                         <Mutation 
                          mutation={POST_MUTATION} 
-                         variables={{ newProject: {projectName, description} }}
+                         variables={{ PN, des, TN, TD}}
                         //  onCompleted={() => this.props.push()
                         refetchQueries={[
                             {
@@ -65,7 +87,8 @@ class NewProject extends Component {
                             }
                         ]}
                          >
-                        {postMutation => <Button  onClick={postMutation}>Create</Button>}
+                         
+                        {postMutation => <Button style={{margin:"4% 0"}} variant="outlined" onClick={postMutation}>Create</Button>}
                         </Mutation>
                        
                 </div>

@@ -16,13 +16,13 @@ export default function FormDialog() {
   };
 
   return (
-    <div style={{ textAlign:"center", width:"100%",}}>
-       
+    <div style={{ textAlign:"center"}}>
+       <ProjectList />
       <Button style={{margin:"1% 0"}} variant="outlined" color="primary" onClick={handleClickOpen}>
-        Create Project
+        New Project
       </Button>
-      <Dialog  open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Create a new project!</DialogTitle>
+      <Dialog style={{textAlign:"center"}} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Create A new project!</DialogTitle>
         <DialogContent>
           <DialogContentText>
           <NewProject />
@@ -30,7 +30,6 @@ export default function FormDialog() {
         
         </DialogContent>
       </Dialog>
-<ProjectList />
    
     </div>
   );

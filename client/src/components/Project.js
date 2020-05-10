@@ -14,19 +14,8 @@ const styles = theme => ({
 
 
 class Project extends Component {
-    state = {
-        projects: {
-            id: '',
-            projectName: "",
-            description: ""
-        }
-    }
+   
 
-    deleteHandler = index =>{
-        const newProjects = [...this.state.projects]
-        newProjects.splice(index, 1)
-        this.setState({ projects: newProjects})
-    }
 
 
     render() {
@@ -35,7 +24,10 @@ class Project extends Component {
         return (
             <Card className={classes.root} key={this.props.project.id}>
             <CardHeader  title={this.props.project.projectName} subheader={this.props.project.description} />
-            <Delete onDelete={this.deleteHandler} />
+
+            {this.props.project.tasks.taskName}
+        
+            <Delete />
             </Card>
         )
     }

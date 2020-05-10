@@ -9,8 +9,9 @@ import gql from "graphql-tag"
 import {TextField, Button } from "@material-ui/core"
 
 const POST_MUTATION = gql `
-mutation NewProject($newProject: String!, $newTask:String!){
-  createProject(data:{projectName:$newProject,description:$newProject,tasks:{create:{taskName:$newTask, taskDetails:$newTask}}}){
+mutation NewProject($PN:String!, $des: String!, $TN: String!, $TD: String!) {
+  createProject(data:{projectName:$PN, description:$des,tasks:{create:{taskName:$TN,taskDetails:$TD}}}){
+    projectName
     description
     tasks {
       taskName
@@ -22,27 +23,27 @@ mutation NewProject($newProject: String!, $newTask:String!){
 
 class NewProject extends Component {
     state = {
-        projectName: "",
-        description: '',
+        PN: "",
+        des: '',
         tasks:[{
-            taskName: "",
-            taskDetails:""
+            TN: "",
+            TD:""
         }]
     }
 
     resetForm = e => {
-        this.setState({ projectName: "", description: ""})
+        this.setState({ PN: "", des: ""})
     }
 
     render() {
-        const { projectName, description, taskName, taskDetails} = this.state
+        const { PN, des, TN, TD} = this.state
         return(
             <div >
                 <div onSubmit={e => {e.preventDefault(); this.resetForm() }}>
                         <TextField 
-                            value={projectName}
+                            value={PN}
                            style={{width:"100%"}}
-                            onChange={e => this.setState({ projectName: e.target.value})}
+                            onChange={e => this.setState({ PN: e.target.value})}
                             type="text"
                             placeholder="Project Name"
                         />
@@ -53,24 +54,24 @@ class NewProject extends Component {
                         multiline
                         rows={6}
                         style={{width:"100%", margin:"4% 0"}}
-                            value={description}
-                            onChange={e => this.setState({ description: e.target.value})}
+                            value={des}
+                            onChange={e => this.setState({ des: e.target.value})}
                             type="text"
                             placeholder="Project details"
                         /> <br />
                            <TextField 
                         
-                            value={taskName}
+                            value={TN}
                             variant="outlined"
-                            onChange={e => this.setState({ taskName: e.target.value})}
+                            onChange={e => this.setState({ TN: e.target.value})}
                             type="text"
                             placeholder="Task Name"
                         />
                            <TextField 
                        
-                            value={taskDetails}
+                            value={TD}
                             variant="outlined"
-                            onChange={e => this.setState({ taskDetails: e.target.value})}
+                            onChange={e => this.setState({ TD: e.target.value})}
                             type="text"
                             placeholder="Task Details"
                         />
@@ -78,7 +79,7 @@ class NewProject extends Component {
                       
                         <Mutation 
                          mutation={POST_MUTATION} 
-                         variables={{ newProject: {projectName:String, description:String}, newTask: {taskName:String, taskDetails:String} }}
+                         variables={{ PN, des, TN, TD}}
                         //  onCompleted={() => this.props.push()
                         refetchQueries={[
                             {

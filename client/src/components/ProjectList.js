@@ -4,6 +4,8 @@ import gql from "graphql-tag"
 // import Project from "./Project"
 import { withStyles, Card, CardHeader, CardContent, Typography } from "@material-ui/core"
 
+import Delete from "./updateandDelete"
+
 const style = theme => ({
     root: {
         display: "flex",
@@ -72,6 +74,7 @@ class ProjectList extends Component {
                                         </Typography>
                                         )}
                                 </CardContent>
+                                <Delete key={project.id}/>
                             </Card>
                                 
                             

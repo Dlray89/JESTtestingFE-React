@@ -23,10 +23,7 @@ class Project extends Component {
         const { classes } = this.props
         return (
             <Card className={classes.root} key={this.props.project.id}>
-            <CardHeader  title={this.props.project.projectName} subheader={this.props.project.description} />
-
-            {this.props.project.tasks.taskName}
-        
+            <CardHeader  title={this.props.project.projectName} subheader={this.props.project.description} />        
             <Delete />
             </Card>
         )

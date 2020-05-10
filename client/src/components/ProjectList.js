@@ -3,7 +3,7 @@ import { Query } from "react-apollo"
 import gql from "graphql-tag"
 // import Project from "./Project"
 import { withStyles, Card, CardHeader, CardContent, Typography } from "@material-ui/core"
-
+import { Link } from "react-router-dom"
 import Delete from "./updateandDelete"
 
 
@@ -61,13 +61,14 @@ class ProjectList extends Component {
                     return (
                         <div className={classes.root}  >
                             {projectData.map((project) => 
-                            <Card className={classes.Card}>
-                            <CardHeader title={project.projectName} subheader={project.description}/>
+                            <Card  className={classes.Card}>
+                           <CardHeader key={project.id} title={project.projectName} subheader={project.description}/>
+                           
                               
                                 
                                 <CardContent>
                                     {project.tasks.map((task) => 
-                                        <Typography variant={"body1"}>
+                                        <Typography  variant={"body1"}>
                                            Task Name: <br/> 
                                            {task.taskName} <br/>
                                             Task Details: <br/>
@@ -75,7 +76,8 @@ class ProjectList extends Component {
                                         </Typography>
                                         )}
                                 </CardContent>
-                                <Delete key={project.id}/>
+                                <Link to={`/project/${project.id}`}><button key={project.id}>View More</button></Link>
+                                <Delete key={`${project.id}`}/>
                             </Card>
                                 
                             

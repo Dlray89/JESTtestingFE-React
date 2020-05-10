@@ -2,7 +2,7 @@ import React, { Component} from "react"
 import { withApollo} from "react-apollo"
 import gql from "graphql-tag"
 import Project from "./Project"
-import { TextField, Button } from "@material-ui/core"
+import { TextField, Button, Card, CardHeader } from "@material-ui/core"
 
 
 
@@ -11,6 +11,10 @@ query Filtering($filter: String){
   projects(where: {projectName_contains:$filter}) {
     projectName
     description
+    tasks {
+        taskName
+        taskDetails
+    }
   
   }
 }
@@ -40,7 +44,20 @@ class Search extends Component {
                     <Button variant="outlined" onClick={() => this._executeSearch()}>Search</Button>
                 </form>
                 {this.state.projects.map((project, index) => (
-                    <Project key={project.id} project={project}  index={index}    />
+                   <Card style={{border:"solid 1px blue", width:"30%", textAlign:"center"}} key={project.id}>
+                   <CardHeader title={project.projectName} subheader={project.description} />
+                    <br />
+                
+                   <div>    
+                        {project.tasks.map((task) =>
+                            <div>
+                            <p>Task Name: <br/>{task.taskName}</p>
+                            <p>Task Details: <br/>
+                            {task.taskDetails}</p>
+                            </div>
+                            )}
+                   </div>
+                   </Card>
                 ))}
             </div>
         )

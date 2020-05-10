@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Switch, Route} from "react-router-dom"
 import './App.css';
+import Project from "./components/Project"
 import ProjectList from "./components/ProjectList"
 import NewProject from "./tools/modal.js"
 import Dashboard from "./components/dashboard"
@@ -21,6 +22,7 @@ export default class App extends Component{
                     <Route exact path="/projectlist" component={ProjectList} />
                     <Route exact path="/checklist" component={TaskList} />
                     <Route exact path="/search" component={Search} />
+                    <Route exact path="/project/:id" component={Project}/>
                 </Switch>
                 </>
                     

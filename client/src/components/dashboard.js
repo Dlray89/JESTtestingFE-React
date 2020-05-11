@@ -8,6 +8,9 @@ import { Typography, Card, CardHeader, CardContent, CardActionArea, Button, with
 
 
 const styles = theme => ({
+    rootContainer: {
+        background: "#595860"
+    },
     card: {
         textAlign: "center",
         display: "flex",
@@ -19,7 +22,8 @@ const styles = theme => ({
     userTitle: {
         textAlign: "center",
         margin: " 2% 0",
-        textDecoration: "underline"
+        textDecoration: "underline",
+        color: "white"
     },
     Hub: {
         textAlign: "center",
@@ -33,23 +37,37 @@ const styles = theme => ({
         justifyContent: "space-evenly",
         flexWrap: "wrap",
         padding: "5%",
-        background: "#aeaeb1",
+        background: "#020024",
         margin: "2% auto"
     },
     HubJournal: {
         width: "20%",
         border: "solid 1px #000f89",
-        textAlign: "center"
+        textAlign: "center",
+        background: "#595860",
+                color:"white"
+
     },
     hubtask: {
         width: "20%",
         border: "solid 1px #000f89",
-        textAlign: "center"
+        textAlign: "center",
+        background: "#595860",
+                color:"white"
+
+
     },
     HubProject: {
-         width: "20%",
+        width: "20%",
         border: "solid 1px #000f89",
-        textAlign: "center"
+        textAlign: "center",
+        background: "#595860",
+        color:"white"
+
+    },
+    Buttons:{
+        border:"solid 1px white",
+        color:"white"
     }
 })
 
@@ -84,7 +102,7 @@ class Dashboard extends Component {
                     const projects = data.projects
 
                     return (
-                        <div>
+                        <div className={classes.rootContainer}>
                             <Typography className={classes.userTitle} variant="h5">
                                 Good Evening, David
                             </Typography >
@@ -92,23 +110,23 @@ class Dashboard extends Component {
                             <div className={classes.card}  >
                                 {projects.map((project) =>
 
-                                <Card style={{border:'solid 1px blue'}}>
-                                    
-                                    <CardHeader title={project.projectName} subheader={project.description}  />
-                                        {project.tasks.map((task) => 
+                                    <Card style={{ border: 'solid 1px blue' }}>
+
+                                        <CardHeader title={project.projectName} subheader={project.description} />
+                                        {project.tasks.map((task) =>
                                             <CardContent>
                                                 Task Name: <br />
-                                                {task.taskName} <br/>
+                                                {task.taskName} <br />
                                                 Task Details: <br />{task.taskDetails}
                                             </CardContent>
-                                            )}
-                                    
-                                </Card>  
+                                        )}
+
+                                    </Card>
 
 
                                     // <RecentProject key={project.id} project={project} />
-                                    
-                                    )}
+
+                                )}
                             </div>
 
                             <div className={classes.Hub} >
@@ -117,32 +135,32 @@ class Dashboard extends Component {
 
                                 <div className={classes.HubContent} >
 
-                                <Card className={classes.HubProject}>
-                                    <CardHeader title="Start a Project" subheader="Thinking about a new project? Get started here" />
-                                    <CardActionArea>
-                                         <Button variant="outlined" color="primary"><Link to="/createproject">Create Project</Link></Button>
-                                    </CardActionArea>
-                                   
-                                </Card>
+                                    <Card className={classes.HubProject}>
+                                        <CardHeader subheaderTypographyProps={{color:"white"}} title="Start a Project" subheader="Thinking about a new project? Get started here" />
+                                        <CardActionArea>
+                                            <Button className={classes.Buttons} variant="outlined" color="primary"><Link to="/createproject" style={{textDecoration:"none", color:"white"}}>Create Project</Link></Button>
+                                        </CardActionArea>
+
+                                    </Card>
 
                                     <Card className={classes.HubJournal}>
 
-                                    <CardHeader title="My Journal" subheader="create a entry of any inportant breakthrough" />
-                                        
-                                    <CardActionArea>
-                                         <Button className={classes.Buttons} variant="outlined" color="primary">New Post</Button>
-                                    </CardActionArea>
-                                        
+                                        <CardHeader subheaderTypographyProps={{color:"white"}} title="My Journal" subheader="create a entry of any inportant breakthrough" />
+
+                                        <CardActionArea>
+                                            <Button className={classes.Buttons} variant="outlined" color="primary">New Post</Button>
+                                        </CardActionArea>
+
                                     </Card>
 
                                     <Card className={classes.hubtask}>
-                                    <CardHeader title="New Task" subheader="Create a new task to make sure your project gets finished on time" />
-                                    <CardActionArea>
-                                         <Button className={classes.Buttons} variant="outlined" color="primary">New Task</Button>
-                                    </CardActionArea>
-                                       
-                                       
-                                       
+                                        <CardHeader subheaderTypographyProps={{color:"white"}} title="New Task" subheader="Create a new task to make sure your project gets finished on time" />
+                                        <CardActionArea>
+                                            <Button className={classes.Buttons} variant="outlined" color="primary">New Task</Button>
+                                        </CardActionArea>
+
+
+
                                     </Card>
                                 </div>
                             </div>

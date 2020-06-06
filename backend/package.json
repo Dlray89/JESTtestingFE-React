@@ -8,7 +8,7 @@
     "apollo-server": "^2.13.0",
     "apollo-server-core": "^1.4.0",
     "apollo-server-express": "^1.4.0",
-    "apollo-server-lambda": "^1.3.6",
+    "apollo-server-lambda": "^2.14.2",
     "apollo-server-module-graphiql": "^1.4.0",
     "apollo-tracing": "^0.1.4",
     "apollo-upload-server": "^7.1.0",
